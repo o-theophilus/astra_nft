@@ -1,0 +1,34 @@
+@hostname = http://127.0.0.1
+@port = 5000
+@host = {{hostname}}:{{port}}
+# @host = https://meji-ng.herokuapp.com/
+@Authorization = IjI1Zjc1NjRiN2NkMTQyYTY5MjlhMTMzZTkzODRlYzU2Ig.YFI30g.yNCajtuI6kwYj65OiHT5KGsxya0
+
+
+#generate_meta
+get  {{host}}/generate_meta HTTP/1.1
+content-type: application/json
+###
+
+#build_collection
+get  {{host}}/build_collection HTTP/1.1
+content-type: application/json
+###
+
+
+
+
+#get_all
+get  {{host}}/nft HTTP/1.1
+content-type: application/json
+###
+
+#get_one
+get  {{host}}/nft/1 HTTP/1.1
+content-type: application/json
+###
+
+#get_photo
+get  {{host}}/photo/1 HTTP/1.1
+content-type: application/json
+###
