@@ -32,7 +32,7 @@
 				<img src="{backend}/photo/{$module.id}" alt={$module.id} />
 				<div class="details">
 					<span>id: <b>{$module.id}</b></span>
-					<span>rarity: <b>{$module.rarity}</b></span>
+					<span>rarity rank: <b>{$module.rarity}</b></span>
 					<br>
 
 					<b>Traits</b>
