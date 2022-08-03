@@ -4,6 +4,7 @@ set FLASK_APP=application
 set FLASK_ENV=development
 flask run
 
+
 # Response Codes
 
 101 -- invalid token
