@@ -8,46 +8,47 @@ bp = Blueprint("photo", __name__)
 
 
 def generate_photo(meta):
+    """Build photos"""
 
     asset_path = f"{getcwd()}/assets"
 
-    ethnicity = Image.open(
-        f"{asset_path}/{meta['gender']}/ethnicity/{meta['ethnicity']}")
-    nose = Image.open(
-        f"{asset_path}/{meta['gender']}/nose/{meta['ethnicity'].split('.')[0]}/{meta['nose']}")
-    eye = Image.open(f"{asset_path}/{meta['gender']}/eye/{meta['eye']}")
-    eyebrow = Image.open(
-        f"{asset_path}/{meta['gender']}/eyebrow/{meta['eyebrow']}")
-    mouth = Image.open(
-        f"{asset_path}/{meta['gender']}/mouth/{meta['mouth']}")
-    costume = Image.open(
-        f"{asset_path}/{meta['gender']}/costume/{meta['costume']}")
-    hair = Image.open(f"{asset_path}/{meta['gender']}/hair/{meta['hair']}")
+    skin_tone = Image.open(
+        f"{asset_path}/{meta['gender']}/skin_tone/{meta['skin_tone']}")
+    hair_style = Image.open(
+        f"{asset_path}/{meta['gender']}/hair_style/{meta['hair_style']}")
+    cloth = Image.open(
+        f"{asset_path}/{meta['gender']}/cloth/{meta['cloth']}")
+    earring = Image.open(
+        f"{asset_path}/{meta['gender']}/earring/{meta['earring']}")
+    eye_glass = Image.open(
+        f"{asset_path}/{meta['gender']}/eye_glass/{meta['eye_glass']}")
+    necklace = Image.open(
+        f"{asset_path}/{meta['gender']}/necklace/{meta['necklace']}")
+    face_mask = Image.open(
+        f"{asset_path}/{meta['gender']}/face_mask/{meta['face_mask']}")
+    head_gear = Image.open(
+        f"{asset_path}/{meta['gender']}/head_gear/{meta['head_gear']}")
+    back_accessory = Image.open(
+        f"{asset_path}/{meta['gender']}/back_accessory/{meta['back_accessory']}")
+    background = Image.open(
+        f"{asset_path}/background/{meta['background']}")
+    background = background.convert(mode="RGBA")
 
-    hair_back = None
-    hair_back_name = meta['hair'].split(".")
-    hair_back_name = f"{hair_back_name[0]}_back.{hair_back_name[1]}"
-    hair_back_path = f"{asset_path}/{meta['gender']}/hair/{hair_back_name}"
-    if path.exists(hair_back_path):
-        hair_back = Image.open(hair_back_path)
-
-    background = Image.open(f"{asset_path}/background/{meta['background']}")
-
-    photo = Image.alpha_composite(ethnicity, nose)
-    photo = Image.alpha_composite(photo, eye)
-    photo = Image.alpha_composite(photo, eyebrow)
-    photo = Image.alpha_composite(photo, mouth)
-    photo = Image.alpha_composite(photo, costume)
-    photo = Image.alpha_composite(photo, hair)
-    if hair_back:
-        photo = Image.alpha_composite(hair_back, photo)
+    photo = Image.alpha_composite(skin_tone, hair_style)
+    photo = Image.alpha_composite(photo, cloth)
+    photo = Image.alpha_composite(photo, earring)
+    photo = Image.alpha_composite(photo, eye_glass)
+    photo = Image.alpha_composite(photo, necklace)
+    photo = Image.alpha_composite(photo, face_mask)
+    photo = Image.alpha_composite(photo, head_gear)
+    photo = Image.alpha_composite(back_accessory, photo)
     photo = Image.alpha_composite(background, photo)
-
     return photo
 
 
 @bp.get("/build_collection")
 def build_collection():
+    """Save from meta.json to folder"""
 
     output = f"{getcwd()}/static"
 
@@ -71,6 +72,7 @@ def build_collection():
 @bp.get("/photo/<id>")
 @bp.get("/photo/<id>/<thumbnail>")
 def photo(id, thumbnail=False):
+    """Return photo to frontend"""
 
     output = f"{getcwd()}/static"
 

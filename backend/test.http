@@ -29,6 +29,6 @@ content-type: application/json
 ###
 
 #get_photo
-get  {{host}}/photo/1 HTTP/1.1
+get  {{host}}/photo/2 HTTP/1.1
 content-type: application/json
 ###

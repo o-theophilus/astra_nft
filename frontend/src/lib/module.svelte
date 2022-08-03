@@ -33,13 +33,15 @@
 				<div class="details">
 					<span>id: <b>{$module.id}</b></span>
 					<span>gender: <b>{$module.gender}</b></span>
-					<span>ethnicity: <b>{$module.ethnicity}</b></span>
-					<span>hair: <b>{$module.hair}</b></span>
-					<span>eyebrow: <b>{$module.eyebrow}</b></span>
-					<span>eye: <b>{$module.eye}</b></span>
-					<span>nose: <b>{$module.nose}</b></span>
-					<span>mouth: <b>{$module.mouth}</b></span>
-					<span>costume: <b>{$module.costume}</b></span>
+					<span>skin tone: <b>{$module.skin_tone}</b></span>
+					<span>cloth: <b>{$module.cloth}</b></span>
+					<span>necklace: <b>{$module.necklace}</b></span>
+					<span>earring: <b>{$module.earring}</b></span>
+					<span>eye glass: <b>{$module.eye_glass}</b></span>
+					<span>face mask: <b>{$module.face_mask}</b></span>
+					<span>hair style: <b>{$module.hair_style}</b></span>
+					<span>head gear: <b>{$module.head_gear}</b></span>
+					<span>back accessory: <b>{$module.back_accessory}</b></span>
 					<span>background: <b>{$module.background}</b></span>
 				</div>
 			</div>
@@ -104,5 +106,7 @@
 	.details {
 		font-size: small;
 		align-items: center;
+
+		text-transform: capitalize;
 	}
 </style>

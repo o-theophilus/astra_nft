@@ -2,7 +2,7 @@
 </script>
 
 <nav>
-	<b> Outside (Pre-NFT) </b>
+	<b> Astra NFT </b>
 </nav>
 
 <style>
