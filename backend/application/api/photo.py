@@ -33,7 +33,7 @@ def generate_photo(meta):
     background = Image.open(
         f"{asset_path}/background/{meta['background']}")
     background = background.convert(mode="RGBA")
-
+    
     photo = Image.alpha_composite(skin_tone, hair_style)
     photo = Image.alpha_composite(photo, cloth)
     photo = Image.alpha_composite(photo, earring)
