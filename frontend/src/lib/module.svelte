@@ -32,6 +32,10 @@
 				<img src="{backend}/photo/{$module.id}" alt={$module.id} />
 				<div class="details">
 					<span>id: <b>{$module.id}</b></span>
+					<span>rarity: <b>{$module.rarity}</b></span>
+					<br>
+
+					<b>Traits</b>
 					<span>gender: <b>{$module.gender}</b></span>
 					<span>skin tone: <b>{$module.skin_tone}</b></span>
 					<span>cloth: <b>{$module.cloth}</b></span>
