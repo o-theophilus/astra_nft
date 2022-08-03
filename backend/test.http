@@ -1,7 +1,7 @@
 @hostname = http://127.0.0.1
 @port = 5000
 @host = {{hostname}}:{{port}}
-# @host = https://meji-ng.herokuapp.com/
+# @host = https://astra.deta.dev
 @Authorization = IjI1Zjc1NjRiN2NkMTQyYTY5MjlhMTMzZTkzODRlYzU2Ig.YFI30g.yNCajtuI6kwYj65OiHT5KGsxya0
 
 
@@ -29,6 +29,6 @@ content-type: application/json
 ###
 
 #get_photo
-get  {{host}}/photo/2 HTTP/1.1
+get  {{host}}/photo/2/k HTTP/1.1
 content-type: application/json
 ###

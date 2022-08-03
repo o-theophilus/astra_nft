@@ -33,7 +33,7 @@ def generate_photo(meta):
     background = Image.open(
         f"{asset_path}/background/{meta['background']}")
     background = background.convert(mode="RGBA")
-    
+
     photo = Image.alpha_composite(skin_tone, hair_style)
     photo = Image.alpha_composite(photo, cloth)
     photo = Image.alpha_composite(photo, earring)
@@ -96,7 +96,7 @@ def photo(id, thumbnail=False):
     if thumbnail:
         x = 5
         width = int(1000/x)
-        height = int(1200/x)
+        height = int(1000/x)
         photo = ImageOps.fit(photo, (width, height), Image.ANTIALIAS)
 
     photo_file = BytesIO()
