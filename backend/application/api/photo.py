@@ -67,6 +67,7 @@ def generate_photo(meta):
     #     # "back_accessory",
     #     # "background"
     # ]
+    
 
     # # size = 100
 
