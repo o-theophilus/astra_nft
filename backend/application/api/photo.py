@@ -12,37 +12,75 @@ def generate_photo(meta):
 
     asset_path = f"{getcwd()}/assets"
 
-    skin_tone = Image.open(
-        f"{asset_path}/{meta['gender']}/skin_tone/{meta['skin_tone']}")
-    hair_style = Image.open(
-        f"{asset_path}/{meta['gender']}/hair_style/{meta['hair_style']}")
-    cloth = Image.open(
-        f"{asset_path}/{meta['gender']}/cloth/{meta['cloth']}")
-    earring = Image.open(
-        f"{asset_path}/{meta['gender']}/earring/{meta['earring']}")
-    eye_glass = Image.open(
-        f"{asset_path}/{meta['gender']}/eye_glass/{meta['eye_glass']}")
-    necklace = Image.open(
-        f"{asset_path}/{meta['gender']}/necklace/{meta['necklace']}")
-    face_mask = Image.open(
-        f"{asset_path}/{meta['gender']}/face_mask/{meta['face_mask']}")
-    head_gear = Image.open(
-        f"{asset_path}/{meta['gender']}/head_gear/{meta['head_gear']}")
-    back_accessory = Image.open(
-        f"{asset_path}/{meta['gender']}/back_accessory/{meta['back_accessory']}")
-    background = Image.open(
-        f"{asset_path}/background/{meta['background']}")
-    background = background.convert(mode="RGBA")
+    # skin_tone = Image.open(
+    #     f"{asset_path}/{meta['gender']}/skin_tone/{meta['skin_tone']}")
+    # hair_style = Image.open(
+    #     f"{asset_path}/{meta['gender']}/hair_style/{meta['hair_style']}")
+    # cloth = Image.open(
+    #     f"{asset_path}/{meta['gender']}/cloth/{meta['cloth']}")
+    # earring = Image.open(
+    #     f"{asset_path}/{meta['gender']}/earring/{meta['earring']}")
+    # eye_glass = Image.open(
+    #     f"{asset_path}/{meta['gender']}/eye_glass/{meta['eye_glass']}")
+    # necklace = Image.open(
+    #     f"{asset_path}/{meta['gender']}/necklace/{meta['necklace']}")
+    # face_mask = Image.open(
+    #     f"{asset_path}/{meta['gender']}/face_mask/{meta['face_mask']}")
+    # head_gear = Image.open(
+    #     f"{asset_path}/{meta['gender']}/head_gear/{meta['head_gear']}")
+    # back_accessory = Image.open(
+    #     f"{asset_path}/{meta['gender']}/back_accessory/{meta['back_accessory']}")
+    # background = Image.open(
+    #     f"{asset_path}/background/{meta['background']}").convert(mode="RGBA")
 
-    photo = Image.alpha_composite(skin_tone, hair_style)
-    photo = Image.alpha_composite(photo, cloth)
-    photo = Image.alpha_composite(photo, earring)
-    photo = Image.alpha_composite(photo, eye_glass)
-    photo = Image.alpha_composite(photo, necklace)
-    photo = Image.alpha_composite(photo, face_mask)
-    photo = Image.alpha_composite(photo, head_gear)
-    photo = Image.alpha_composite(back_accessory, photo)
-    photo = Image.alpha_composite(background, photo)
+    # size = 100
+    # skin_tone = ImageOps.fit(skin_tone, (size, size), Image.ANTIALIAS)
+    # hair_style = ImageOps.fit(hair_style, (size, size), Image.ANTIALIAS)
+    # cloth = ImageOps.fit(cloth, (size, size), Image.ANTIALIAS)
+    # earring = ImageOps.fit(earring, (size, size), Image.ANTIALIAS)
+    # eye_glass = ImageOps.fit(eye_glass, (size, size), Image.ANTIALIAS)
+    # necklace = ImageOps.fit(necklace, (size, size), Image.ANTIALIAS)
+    # face_mask = ImageOps.fit(face_mask, (size, size), Image.ANTIALIAS)
+    # head_gear = ImageOps.fit(head_gear, (size, size), Image.ANTIALIAS)
+    # back_accessory = ImageOps.fit(back_accessory, (size, size), Image.ANTIALIAS)
+    # background = ImageOps.fit(background, (size, size), Image.ANTIALIAS)
+
+    # photo = Image.alpha_composite(skin_tone, hair_style)
+    # photo = Image.alpha_composite(photo, cloth)
+    # photo = Image.alpha_composite(photo, earring)
+    # photo = Image.alpha_composite(photo, eye_glass)
+    # photo = Image.alpha_composite(photo, necklace)
+    # photo = Image.alpha_composite(photo, face_mask)
+    # photo = Image.alpha_composite(photo, head_gear)
+    # photo = Image.alpha_composite(back_accessory, photo)
+    # photo = Image.alpha_composite(background, photo)
+
+    items = [
+        # "skin_tone",
+        "hair_style",
+        "cloth",
+        "earring",
+        "eye_glass",
+        "necklace",
+        "face_mask",
+        "head_gear",
+        # "back_accessory",
+        # "background"
+    ]
+
+    # size = 100
+
+    file = Image.open(
+        f"{asset_path}/{meta['gender']}/skin_tone/{meta['skin_tone']}")
+    # file = ImageOps.fit(file, (size, size), Image.ANTIALIAS)
+    photo = Image.alpha_composite(file, file)
+
+    for x in items:
+        file = Image.open(
+            f"{asset_path}/{meta['gender']}/{x}/{meta[x]}")
+        # file = ImageOps.fit(file, (size, size), Image.ANTIALIAS)
+        photo = Image.alpha_composite(photo, file)
+
     return photo
 
 
@@ -55,7 +93,7 @@ def build_collection():
     with open(f"{output}/meta.json") as f:
         data = json.load(f)
 
-    output = f"{getcwd()}/static"
+    output = f"{getcwd()}/static/images"
     if not path.exists(output):
         mkdir(output)
 

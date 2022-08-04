@@ -24,11 +24,11 @@ content-type: application/json
 ###
 
 #get_one
-get  {{host}}/nft/1 HTTP/1.1
+get  {{host}}/nft/7 HTTP/1.1
 content-type: application/json
 ###
 
 #get_photo
-get  {{host}}/photo/2/k HTTP/1.1
+get  {{host}}/photo/7 HTTP/1.1
 content-type: application/json
 ###
