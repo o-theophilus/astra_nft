@@ -31,7 +31,7 @@ def get_all():
         m = {}
         for key, value in i.items():
             if type(value) == str:
-                m[key] = value.split(".")[0]
+                m[key] = value.split("#")[0]
             else:
                 m[key] = value
         _temp.append(m)

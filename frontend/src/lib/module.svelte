@@ -33,7 +33,7 @@
 				<div class="details">
 					<span>id: <b>{$module.id}</b></span>
 					<span>rarity rank: <b>{$module.rarity}</b></span>
-					<br>
+					<br />
 
 					<b>Traits</b>
 					<span>gender: <b>{$module.gender}</b></span>
@@ -42,9 +42,8 @@
 					<span>necklace: <b>{$module.necklace}</b></span>
 					<span>earring: <b>{$module.earring}</b></span>
 					<span>eye glass: <b>{$module.eye_glass}</b></span>
-					<span>face mask: <b>{$module.face_mask}</b></span>
-					<span>hair style: <b>{$module.hair_style}</b></span>
 					<span>head gear: <b>{$module.head_gear}</b></span>
+					<span>hair style: <b>{$module.hair_style}</b></span>
 					<span>back accessory: <b>{$module.back_accessory}</b></span>
 					<span>background: <b>{$module.background}</b></span>
 				</div>

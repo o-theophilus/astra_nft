@@ -32,7 +32,6 @@
 
 <script>
 	export let metas;
-	console.log(metas);
 	export let total_page;
 
 	const submit = async (page) => {

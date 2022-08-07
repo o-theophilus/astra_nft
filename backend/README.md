@@ -1,7 +1,7 @@
 # Note
 
 set FLASK_APP=application
-set FLASK_ENV=development
+set FLASK_DEBUG=True
 flask run
 
 
@@ -14,6 +14,3 @@ flask run
 401 -- invalid request (app tampered)
 
 ```
-
-deta update -e .env
-pip freeze > requirements.txt

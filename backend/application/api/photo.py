@@ -24,8 +24,6 @@ def generate_photo(meta):
         f"{asset_path}/{meta['gender']}/eye_glass/{meta['eye_glass']}")
     necklace = Image.open(
         f"{asset_path}/{meta['gender']}/necklace/{meta['necklace']}")
-    face_mask = Image.open(
-        f"{asset_path}/{meta['gender']}/face_mask/{meta['face_mask']}")
     head_gear = Image.open(
         f"{asset_path}/{meta['gender']}/head_gear/{meta['head_gear']}")
     back_accessory = Image.open(
@@ -38,7 +36,6 @@ def generate_photo(meta):
     photo = Image.alpha_composite(photo, earring)
     photo = Image.alpha_composite(photo, eye_glass)
     photo = Image.alpha_composite(photo, necklace)
-    photo = Image.alpha_composite(photo, face_mask)
     photo = Image.alpha_composite(photo, head_gear)
     photo = Image.alpha_composite(back_accessory, photo)
     photo = Image.alpha_composite(background, photo)
