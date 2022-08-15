@@ -26,8 +26,8 @@ def generate_photo(meta):
         f"{asset_path}/{meta['gender']}/necklace/{meta['necklace']}")
     head_gear = Image.open(
         f"{asset_path}/{meta['gender']}/head_gear/{meta['head_gear']}")
-    back_accessory = Image.open(
-        f"{asset_path}/{meta['gender']}/back_accessory/{meta['back_accessory']}")
+    temp = f"{meta['gender']}/back_accessory/{meta['back_accessory']}"
+    back_accessory = Image.open(f"{asset_path}/{temp}")
     background = Image.open(
         f"{asset_path}/background/{meta['background']}").convert(mode="RGBA")
 

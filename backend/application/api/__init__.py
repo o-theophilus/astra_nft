@@ -44,7 +44,7 @@ def generate_meta():
         back_accessory = get_list("back_accessory", gender)
 
         output = []
-        while len(output) < 5000:
+        while len(output) < 2500:
             output.append({
                 "gender": gender,
                 "skin_tone": skin_tone[0],
