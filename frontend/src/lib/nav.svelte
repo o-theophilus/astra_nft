@@ -2,7 +2,7 @@
 </script>
 
 <nav>
-	<b> Astra NFT </b>
+	<b> Astra NFT - 5000 </b>
 </nav>
 
 <style>
