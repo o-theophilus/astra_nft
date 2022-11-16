@@ -43,29 +43,6 @@ def generate_photo(meta):
     return photo
 
 
-@bp.get("/build_collection")
-def build_collection():
-    """Save from meta.json to folder"""
-
-    output = f"{getcwd()}/static"
-
-    with open(f"{output}/meta.json") as f:
-        data = json.load(f)
-
-    output = f"{getcwd()}/static/images"
-    if not path.exists(output):
-        mkdir(output)
-
-    for x in data:
-        photo = generate_photo(x)
-        photo.save(f"{output}/{x['id']}.png")
-
-    return jsonify({
-        "status": 200,
-        "message": "ok"
-    })
-
-
 @bp.get("/photo/<id>")
 @bp.get("/photo/<id>/<thumbnail>")
 def photo(id, thumbnail=False):
@@ -100,3 +77,26 @@ def photo(id, thumbnail=False):
     photo.save(photo_file, format="PNG")
     photo_file.seek(0)
     return send_file(photo_file, mimetype="image/png")
+
+
+@bp.get("/build_collection")
+def save_photo_to_folder():
+    """Save from meta.json to folder"""
+
+    output = f"{getcwd()}/static"
+
+    with open(f"{output}/meta.json") as f:
+        data = json.load(f)
+
+    output = f"{getcwd()}/static/images"
+    if not path.exists(output):
+        mkdir(output)
+
+    for x in data:
+        photo = generate_photo(x)
+        photo.save(f"{output}/{x['id']}.png")
+
+    return jsonify({
+        "status": 200,
+        "message": "ok"
+    })
