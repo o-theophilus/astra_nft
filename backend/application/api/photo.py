@@ -1,6 +1,6 @@
 from flask import Blueprint, send_file, jsonify
 from PIL import Image, ImageOps
-from os import path, getcwd, mkdir
+from os import path, getcwd, mkdir, listdir
 import json
 from io import BytesIO
 
@@ -10,35 +10,28 @@ bp = Blueprint("photo", __name__)
 def generate_photo(meta):
     """Build photos"""
 
-    asset_path = f"{getcwd()}/assets"
+    def get_v(v, bg=False):
+        if meta[v] != "none":
+            asset_path = f"{getcwd()}/assets/{meta['gender']}/{v}"
+            if bg:
+                asset_path = f"{getcwd()}/assets/background"
 
-    skin_tone = Image.open(
-        f"{asset_path}/{meta['gender']}/skin_tone/{meta['skin_tone']}")
-    hair_style = Image.open(
-        f"{asset_path}/{meta['gender']}/hair_style/{meta['hair_style']}")
-    cloth = Image.open(
-        f"{asset_path}/{meta['gender']}/cloth/{meta['cloth']}")
-    earring = Image.open(
-        f"{asset_path}/{meta['gender']}/earring/{meta['earring']}")
-    eye_glass = Image.open(
-        f"{asset_path}/{meta['gender']}/eye_glass/{meta['eye_glass']}")
-    necklace = Image.open(
-        f"{asset_path}/{meta['gender']}/necklace/{meta['necklace']}")
-    head_gear = Image.open(
-        f"{asset_path}/{meta['gender']}/head_gear/{meta['head_gear']}")
-    temp = f"{meta['gender']}/back_accessory/{meta['back_accessory']}"
-    back_accessory = Image.open(f"{asset_path}/{temp}")
-    background = Image.open(
-        f"{asset_path}/background/{meta['background']}").convert(mode="RGBA")
+            for img_name in listdir(asset_path):
+                if img_name.split("#")[0] == meta[v]:
+                    photo = Image.open(f"{asset_path}/{img_name}")
+        else:
+            photo = Image.new('RGBA', (2000, 2000), (0, 0, 0, 0))
+        return photo
 
-    photo = Image.alpha_composite(skin_tone, hair_style)
-    photo = Image.alpha_composite(photo, cloth)
-    photo = Image.alpha_composite(photo, earring)
-    photo = Image.alpha_composite(photo, eye_glass)
-    photo = Image.alpha_composite(photo, necklace)
-    photo = Image.alpha_composite(photo, head_gear)
-    photo = Image.alpha_composite(back_accessory, photo)
-    photo = Image.alpha_composite(background, photo)
+    photo = Image.alpha_composite(get_v("skin_tone"), get_v("hair_style"))
+    photo = Image.alpha_composite(photo, get_v("cloth"))
+    photo = Image.alpha_composite(photo, get_v("earring"))
+    photo = Image.alpha_composite(photo, get_v("eye_glass"))
+    photo = Image.alpha_composite(photo, get_v("necklace"))
+    photo = Image.alpha_composite(photo, get_v("head_gear"))
+    photo = Image.alpha_composite(get_v("back_accessory"), photo)
+    photo = Image.alpha_composite(
+        get_v("background", True).convert(mode="RGBA"), photo)
 
     return photo
 

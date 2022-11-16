@@ -26,18 +26,6 @@ def get_all():
     stop = start + page_size
     data = data[start: stop]
 
-    _temp = []
-    for i in data:
-        m = {}
-        for key, value in i.items():
-            if type(value) == str:
-                m[key] = value.split("#")[0]
-            else:
-                m[key] = value
-        _temp.append(m)
-
-    data = _temp
-
     return jsonify({
         "status": 200,
         "message": "ok",
@@ -47,6 +35,8 @@ def get_all():
         }
     })
 
+
+# unused
 
 @bp.get("/nft/<id>")
 def get(id):

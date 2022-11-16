@@ -63,7 +63,6 @@
 		top: var(--headerHeight);
 		z-index: 1;
 
-		/* padding: calc(var(--gap3) * 2) var(--gap3); */
 		padding: var(--gap3);
 		overflow-y: auto;
 

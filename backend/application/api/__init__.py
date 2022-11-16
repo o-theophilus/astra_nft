@@ -21,13 +21,24 @@ def generate_meta():
     if not path.exists(output_folder):
         mkdir(output_folder)
     asset_path = f"{getcwd()}/assets"
+    total_count = 5000
 
     def get_list(variation, gender=""):
         output = []
         for img_name in listdir(f"{asset_path}/{gender}/{variation}"):
-            amount = img_name.split(".")[0].split("#")[1]
-            temp = [img_name for _ in range(int(amount))]
+
+            img_name, amount = img_name.split("#")
+            amount = amount.split(".")[0]
+            amount = int(amount)
+
+            temp = [img_name for _ in range(amount)]
             output = [*output, *temp]
+
+        amount = int(total_count/2 - len(output))
+        if amount > 0:
+            temp = ["none" for _ in range(amount)]
+            output = [*output, *temp]
+
         shuffle(output)
         return output
 
@@ -44,7 +55,7 @@ def generate_meta():
         back_accessory = get_list("back_accessory", gender)
 
         output = []
-        while len(output) < 2500:
+        while len(output) < total_count/2:
             output.append({
                 "gender": gender,
                 "skin_tone": skin_tone[0],
@@ -92,6 +103,9 @@ def generate_meta():
     for i, x in enumerate(meta):
         x["background"] = background[i]
 
+
+# calculate rarity
+
     all_variation = []
     unique_variation = []
     for x in meta:
@@ -126,8 +140,12 @@ def generate_meta():
 
     shuffle(meta)
 
+# give ID
+
     for i, x in enumerate(meta):
         x["id"] = i + 1
+
+# save meta
 
     with open(f"{output_folder}/meta.json", 'w+') as f:
         json.dump(meta, f, indent=4)
