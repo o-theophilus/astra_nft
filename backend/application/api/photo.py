@@ -23,12 +23,10 @@ def generate_photo(meta):
             photo = Image.new('RGBA', (2000, 2000), (0, 0, 0, 0))
         return photo
 
-    photo = Image.alpha_composite(get_v("skin_tone"), get_v("hair_style"))
-    photo = Image.alpha_composite(photo, get_v("cloth"))
-    photo = Image.alpha_composite(photo, get_v("earring"))
-    photo = Image.alpha_composite(photo, get_v("eye_glass"))
-    photo = Image.alpha_composite(photo, get_v("necklace"))
-    photo = Image.alpha_composite(photo, get_v("head_gear"))
+    photo = Image.alpha_composite(get_v("skin_tone"), get_v("hairstyle"))
+    photo = Image.alpha_composite(photo, get_v("attire"))
+    photo = Image.alpha_composite(photo, get_v("accessory"))
+    photo = Image.alpha_composite(photo, get_v("headgear"))
     photo = Image.alpha_composite(get_v("back_accessory"), photo)
     photo = Image.alpha_composite(
         get_v("background", True).convert(mode="RGBA"), photo)

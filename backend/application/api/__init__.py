@@ -26,7 +26,6 @@ def generate_meta():
     def get_list(variation, gender=""):
         output = []
         for img_name in listdir(f"{asset_path}/{gender}/{variation}"):
-
             img_name, amount = img_name.split("#")
             amount = amount.split(".")[0]
             amount = int(amount)
@@ -46,12 +45,10 @@ def generate_meta():
 
     def get_meta(gender):
         skin_tone = get_list("skin_tone", gender)
-        hair_style = get_list("hair_style", gender)
-        cloth = get_list("cloth", gender)
-        earring = get_list("earring", gender)
-        eye_glass = get_list("eye_glass", gender)
-        necklace = get_list("necklace", gender)
-        head_gear = get_list("head_gear", gender)
+        hairstyle = get_list("hairstyle", gender)
+        attire = get_list("attire", gender)
+        accessory = get_list("accessory", gender)
+        headgear = get_list("headgear", gender)
         back_accessory = get_list("back_accessory", gender)
 
         output = []
@@ -59,12 +56,10 @@ def generate_meta():
             output.append({
                 "gender": gender,
                 "skin_tone": skin_tone[0],
-                "hair_style": hair_style[0],
-                "cloth": cloth[0],
-                "earring": earring[0],
-                "eye_glass": eye_glass[0],
-                "necklace": necklace[0],
-                "head_gear": head_gear[0],
+                "hairstyle": hairstyle[0],
+                "attire": attire[0],
+                "accessory": accessory[0],
+                "headgear": headgear[0],
                 "back_accessory": back_accessory[0]
             })
             count = len(output)
@@ -73,23 +68,19 @@ def generate_meta():
 
             if count == len(output):
                 skin_tone = skin_tone[1:]
-                hair_style = hair_style[1:]
-                cloth = cloth[1:]
-                earring = earring[1:]
-                eye_glass = eye_glass[1:]
-                necklace = necklace[1:]
-                head_gear = head_gear[1:]
+                hairstyle = hairstyle[1:]
+                attire = attire[1:]
+                accessory = accessory[1:]
+                headgear = headgear[1:]
                 back_accessory = back_accessory[1:]
             elif len(output) == 4999:
                 raise ValueError("stalemate")
             else:
                 shuffle(skin_tone)
-                shuffle(hair_style)
-                shuffle(cloth)
-                shuffle(earring)
-                shuffle(eye_glass)
-                shuffle(necklace)
-                shuffle(head_gear)
+                shuffle(hairstyle)
+                shuffle(attire)
+                shuffle(accessory)
+                shuffle(headgear)
                 shuffle(back_accessory)
                 print("shuffle")
 
