@@ -73,7 +73,7 @@ def generate_meta():
                 accessory = accessory[1:]
                 headgear = headgear[1:]
                 back_accessory = back_accessory[1:]
-            elif len(output) == 4999:
+            elif len(output) == total_count - 1:
                 raise ValueError("stalemate")
             else:
                 shuffle(skin_tone)
