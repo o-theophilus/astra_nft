@@ -9,6 +9,7 @@ flask-cors = "*"
 python-dotenv = "*"
 pillow = "*"
 gunicorn = "*"
+deta = "*"
 
 [dev-packages]
 flake8 = "*"

@@ -32,3 +32,11 @@ content-type: application/json
 get  {{host}}/photo/7 HTTP/1.1
 content-type: application/json
 ###
+
+
+
+
+#upload_photo_to_deta
+post  {{host}}/photo HTTP/1.1
+content-type: application/json
+###
