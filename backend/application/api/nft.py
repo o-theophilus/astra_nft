@@ -19,6 +19,14 @@ def get_all():
         page_no = 1
     page_no = int(page_no)
 
+    male = 0
+    female = 0
+    for x in data:
+        if x["gender"] == "male":
+            male += 1
+        else:
+            female += 1
+
     page_size = 50
     total_page = ceil(len(data) / page_size)
 
@@ -31,7 +39,9 @@ def get_all():
         "message": "ok",
         "data": {
             "metas": data,
-            "total_page": total_page
+            "total_page": total_page,
+            "male_count": male,
+            "female_count": female
         }
     })
 

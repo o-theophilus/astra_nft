@@ -1,5 +1,5 @@
 <script context="module">
-	import { backend } from '$lib/store.js';
+	import { backend, male_count, female_count } from '$lib/store.js';
 
 	import Item from './_item.svelte';
 	import Pagination from '$lib/pagination.svelte';
@@ -23,7 +23,9 @@
 			return {
 				props: {
 					metas: resp.data.metas,
-					total_page: resp.data.total_page
+					total_page: resp.data.total_page,
+					male_count_in: resp.data.male_count,
+					female_count_in: resp.data.female_count
 				}
 			};
 		}
@@ -33,6 +35,11 @@
 <script>
 	export let metas;
 	export let total_page;
+	export let male_count_in;
+	export let female_count_in;
+
+	$male_count = male_count_in
+	$female_count = female_count_in
 
 	const submit = async (page) => {
 		const _resp = await fetch(`${backend}/nft?page=${page}`, {
@@ -49,7 +56,6 @@
 		}
 	};
 </script>
-
 <div class="page">
 	{#each metas as meta}
 		<Item {meta} />
