@@ -18,6 +18,52 @@ def index():
 amount_to_generate = 6000
 
 
+def assign_rearity(meta):
+    all_variation = []
+    unique_variation = []
+    for x in meta:
+        for k, v in x.items():
+            if k in ["rarity", "id"]:
+                continue
+            kv = f"{k}:::{v}"
+            all_variation.append(kv)
+            if kv not in unique_variation:
+                unique_variation.append(kv)
+
+    items_count = {}
+    for x in unique_variation:
+        kv = x.split(":::")
+        k = kv[0]
+        v = kv[1]
+
+        if k not in items_count:
+            items_count[k] = {}
+        items_count[k][v] = all_variation.count(x)
+
+    for x in meta:
+        x["rarity"] = 0
+        for k, v in x.items():
+            if k in ["rarity", "id"]:
+                continue
+            x["rarity"] += items_count[k][v]
+
+    meta = sorted(meta, key=lambda d: d["rarity"], reverse=False)
+    for i, x in enumerate(meta):
+        x["rarity"] = i + 1
+
+
+def assign_id_and_save(meta):
+    output_folder = f"{getcwd()}/static"
+    if not path.exists(output_folder):
+        mkdir(output_folder)
+
+    for i, x in enumerate(meta):
+        x["id"] = i + 1
+
+    with open(f"{output_folder}/meta.json", 'w+') as f:
+        json.dump(meta, f, indent=4)
+
+
 @bp.post("/distribute_assets")
 def distribute_assets():
 
@@ -71,9 +117,6 @@ def distribute_assets():
 
 @bp.get("/generate_meta")
 def generate_meta():
-    output_folder = f"{getcwd()}/static"
-    if not path.exists(output_folder):
-        mkdir(output_folder)
     asset_path = f"{getcwd()}/assets"
 
     def get_list(variation, gender=""):
@@ -147,54 +190,47 @@ def generate_meta():
     for i, x in enumerate(meta):
         x["background"] = background[i]
 
-
-# calculate rarity
-
-    all_variation = []
-    unique_variation = []
-    for x in meta:
-        for k, v in x.items():
-            if k == "rarity":
-                continue
-            kv = f"{k}:::{v}"
-            all_variation.append(kv)
-            if kv not in unique_variation:
-                unique_variation.append(kv)
-
-    items_count = {}
-    for x in unique_variation:
-        kv = x.split(":::")
-        k = kv[0]
-        v = kv[1]
-
-        if k not in items_count:
-            items_count[k] = {}
-        items_count[k][v] = all_variation.count(x)
-
-    for x in meta:
-        x["rarity"] = 0
-        for k, v in x.items():
-            if k == "rarity":
-                continue
-            x["rarity"] += items_count[k][v]
-
-    meta = sorted(meta, key=lambda d: d["rarity"], reverse=False)
-    for i, x in enumerate(meta):
-        x["rarity"] = i + 1
-
     shuffle(meta)
-
-# give ID
-
-    for i, x in enumerate(meta):
-        x["id"] = i + 1
-
-# save meta
-
-    with open(f"{output_folder}/meta.json", 'w+') as f:
-        json.dump(meta, f, indent=4)
-
+    assign_rearity(meta)
+    assign_id_and_save(meta)
     print(time.perf_counter() - tic)
+
+    return jsonify({
+        "status": 200,
+        "message": "ok"
+    })
+
+
+@bp.post("/cleanup")
+def cleanup():
+    output = f"{getcwd()}/static"
+
+    with open(f"{output}/meta.json") as f:
+        data = json.load(f)
+
+    to_del = []
+    for x in data:
+        if (
+            x["gender"] == "female"
+            and x["headgear"] in ["astra helmet spike",
+                                  "AstraCap", "Astrahelmet", "blackasmask"]
+            and x["hairstyle"] in ["astra hairstyle 4", "astra hairstyle 5",
+                                   "astra hairstyle 13", "astra hairstyle 15"]
+        ):
+            to_del.append(x["id"])
+        elif (
+            x["gender"] == "male"
+            and x["headgear"] in ["blackasspke red", "helmetenticls",
+                                  "IMG-3396", "mech had", "punkhelmet"]
+            and x["hairstyle"] in ["astra hairstyle 4", "astra hairstyle 5",
+                                   "astra hairstyle 7", "astra hairstyle 8",
+                                   "astra hairstyle 9", "astra hairstyle 13"]
+        ):
+            to_del.append(x["id"])
+
+    meta = [x for x in data if x["id"] not in to_del]
+    assign_rearity(meta)
+    assign_id_and_save(meta)
 
     return jsonify({
         "status": 200,

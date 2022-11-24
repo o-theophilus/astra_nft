@@ -47,3 +47,9 @@ content-type: application/json
 post  {{host}}/photo HTTP/1.1
 content-type: application/json
 ###
+
+
+#cleanup
+post  {{host}}/cleanup HTTP/1.1
+content-type: application/json
+###
