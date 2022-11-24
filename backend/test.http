@@ -5,6 +5,13 @@
 @Authorization = IjI1Zjc1NjRiN2NkMTQyYTY5MjlhMTMzZTkzODRlYzU2Ig.YFI30g.yNCajtuI6kwYj65OiHT5KGsxya0
 
 
+
+#distribute_assets
+post  {{host}}/distribute_assets HTTP/1.1
+content-type: application/json
+###
+
+
 #generate_meta
 get  {{host}}/generate_meta HTTP/1.1
 content-type: application/json

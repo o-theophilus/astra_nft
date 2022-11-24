@@ -1,5 +1,5 @@
 from flask import Blueprint, jsonify
-from os import getcwd, listdir, path, mkdir
+from os import getcwd, listdir, path, mkdir, rename
 import json
 from random import shuffle
 import time
@@ -15,13 +15,66 @@ def index():
     })
 
 
+amount_to_generate = 6000
+
+
+@bp.post("/distribute_assets")
+def distribute_assets():
+
+    def distribute(amount_to_generate, full_path, allow_empty):
+        files_in_folder = listdir(full_path)
+        last_file = files_in_folder[-1]
+        count_files = len(files_in_folder)
+        if allow_empty:
+            count_files += 1
+        sub_count = int(amount_to_generate / count_files)
+
+        for old_name in files_in_folder:
+            img_name, amount_ = old_name.split("#")
+            ext = amount_.split(".")[1]
+
+            if not allow_empty and old_name == last_file:
+                sub_count += amount_to_generate % count_files
+
+            new_name = f"{img_name}#{sub_count}.{ext}"
+            rename(
+                f"{full_path}/{old_name}",
+                f"{full_path}/{new_name}"
+            )
+
+    base_path = f"{getcwd()}/assets"
+
+    for g in ["male", "female"]:
+        for v in [
+            "skin_tone",
+            "hairstyle",
+            "attire",
+            "accessory",
+            "headgear",
+            "back_accessory"
+        ]:
+            e = True
+            if (
+                v == "skin_tone"
+                or g == "female" and v == "attire"
+            ):
+                e = False
+            distribute(amount_to_generate/2, f"{base_path}/{g}/{v}", e)
+
+    distribute(amount_to_generate, f"{base_path}/background", False)
+
+    return jsonify({
+        "status": 200,
+        "message": "ok"
+    })
+
+
 @bp.get("/generate_meta")
 def generate_meta():
     output_folder = f"{getcwd()}/static"
     if not path.exists(output_folder):
         mkdir(output_folder)
     asset_path = f"{getcwd()}/assets"
-    total_count = 5000
 
     def get_list(variation, gender=""):
         output = []
@@ -33,7 +86,7 @@ def generate_meta():
             temp = [img_name for _ in range(amount)]
             output = [*output, *temp]
 
-        amount = int(total_count/2 - len(output))
+        amount = int(amount_to_generate/2 - len(output))
         if amount > 0:
             temp = ["none" for _ in range(amount)]
             output = [*output, *temp]
@@ -52,7 +105,7 @@ def generate_meta():
         back_accessory = get_list("back_accessory", gender)
 
         output = []
-        while len(output) < total_count/2:
+        while len(output) < amount_to_generate/2:
             output.append({
                 "gender": gender,
                 "skin_tone": skin_tone[0],
@@ -73,7 +126,7 @@ def generate_meta():
                 accessory = accessory[1:]
                 headgear = headgear[1:]
                 back_accessory = back_accessory[1:]
-            elif len(output) == total_count - 1:
+            elif len(output) == amount_to_generate - 1:
                 raise ValueError("stalemate")
             else:
                 shuffle(skin_tone)
