@@ -27,7 +27,7 @@ def get_all():
         else:
             female += 1
 
-    page_size = 50
+    page_size = 100
     total_page = ceil(len(data) / page_size)
 
     start = (page_no - 1) * page_size
@@ -40,8 +40,10 @@ def get_all():
         "data": {
             "metas": data,
             "total_page": total_page,
-            "male_count": male,
-            "female_count": female
+            "count": {
+                "male": male,
+                "female": female
+            }
         }
     })
 

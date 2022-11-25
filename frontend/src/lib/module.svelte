@@ -2,7 +2,7 @@
 	import { scale } from 'svelte/transition';
 	import { backInOut } from 'svelte/easing';
 
-	import { module, backend } from '$lib/store.js';
+	import { module, backend, count } from '$lib/store.js';
 	import Button from './button.svelte';
 </script>
 
@@ -32,7 +32,7 @@
 				<img src="{backend}/photo/{$module.id}" alt={$module.id} />
 				<div class="details">
 					<span>id: <b>{$module.id}</b></span>
-					<span>rarity rank: <b>{$module.rarity}</b></span>
+					<span>rarity rank: <b>{$module.rarity} / {$count.male + $count.female}</b></span>
 					<br />
 
 					<b>Traits</b>

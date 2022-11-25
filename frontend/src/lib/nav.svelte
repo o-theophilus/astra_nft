@@ -1,9 +1,9 @@
 <script>
-	import { male_count, female_count } from '$lib/store.js';
+	import { count } from '$lib/store.js';
 </script>
 
 <nav>
-	<b> Astra NFT (m:{$male_count}, f:{$female_count})</b>
+	<b> Astra NFT (m:{$count.male}, f:{$count.female})</b>
 </nav>
 
 <style>
