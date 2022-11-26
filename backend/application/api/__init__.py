@@ -227,6 +227,14 @@ def cleanup():
                                    "astra hairstyle 9", "astra hairstyle 13"]
         ):
             to_del.append(x["id"])
+        elif (
+            x["gender"] == "male"
+            and x["attire"] in ["astra attire 11", "astra attire 24",
+                                "astra attire 25", "astra attire 32",
+                                "astra attire 33", "astra attire 34"]
+            and x["headgear"] == "AstraCap"
+        ):
+            to_del.append(x["id"])
 
     meta = [x for x in data if x["id"] not in to_del]
     assign_rearity(meta)
