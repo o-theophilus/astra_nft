@@ -64,6 +64,36 @@ def assign_id_and_save(meta):
         json.dump(meta, f, indent=4)
 
 
+def is_good(x):
+    if (
+        x["gender"] == "female"
+        and x["headgear"] in ["astra helmet spike",
+                              "AstraCap", "Astrahelmet", "blackasmask"]
+        and x["hairstyle"] in ["astra hairstyle 4", "astra hairstyle 5",
+                               "astra hairstyle 13", "astra hairstyle 15"]
+    ):
+        return False
+    elif (
+        x["gender"] == "male"
+        and x["headgear"] in ["blackasspke red", "helmetenticls",
+                              "IMG-3396", "mech had", "punkhelmet"]
+        and x["hairstyle"] in ["astra hairstyle 4", "astra hairstyle 5",
+                               "astra hairstyle 7", "astra hairstyle 8",
+                               "astra hairstyle 9", "astra hairstyle 13"]
+    ):
+        return False
+    elif (
+        x["gender"] == "male"
+        and x["attire"] in ["astra attire 11", "astra attire 24",
+                            "astra attire 25", "astra attire 32",
+                            "astra attire 33", "astra attire 34"]
+        and x["headgear"] == "AstraCap"
+    ):
+        return False
+
+    return True
+
+
 @bp.post("/distribute_assets")
 def distribute_assets():
 
@@ -137,8 +167,6 @@ def generate_meta():
         shuffle(output)
         return output
 
-    tic = time.perf_counter()
-
     def get_meta(gender):
         skin_tone = get_list("skin_tone", gender)
         hairstyle = get_list("hairstyle", gender)
@@ -147,9 +175,24 @@ def generate_meta():
         headgear = get_list("headgear", gender)
         back_accessory = get_list("back_accessory", gender)
 
+        shuffle_count = 0
+
+        def shuffle_it():
+            nonlocal shuffle_count
+            shuffle_count += 1
+            if shuffle_count == 100:
+                raise ValueError("stalemate")
+
+            shuffle(skin_tone)
+            shuffle(hairstyle)
+            shuffle(attire)
+            shuffle(accessory)
+            shuffle(headgear)
+            shuffle(back_accessory)
+
         output = []
         while len(output) < amount_to_generate/2:
-            output.append({
+            gen = {
                 "gender": gender,
                 "skin_tone": skin_tone[0],
                 "hairstyle": hairstyle[0],
@@ -157,30 +200,35 @@ def generate_meta():
                 "accessory": accessory[0],
                 "headgear": headgear[0],
                 "back_accessory": back_accessory[0]
-            })
-            count = len(output)
-            output = list(map(dict, set(
-                tuple(sorted(sub.items())) for sub in output)))
+            }
 
-            if count == len(output):
-                skin_tone = skin_tone[1:]
-                hairstyle = hairstyle[1:]
-                attire = attire[1:]
-                accessory = accessory[1:]
-                headgear = headgear[1:]
-                back_accessory = back_accessory[1:]
-            elif len(output) == amount_to_generate - 1:
-                raise ValueError("stalemate")
+            # if not is_good(gen):
+            #     shuffle_it()
+            #     continue
+            # else:
+            #     shuffle_count = 0
+
+            temp = [*output, gen]
+            temp = list(map(dict, set(
+                tuple(sorted(sub.items())) for sub in temp)))
+
+            if len(output) == len(temp):
+                shuffle_it()
+                continue
             else:
-                shuffle(skin_tone)
-                shuffle(hairstyle)
-                shuffle(attire)
-                shuffle(accessory)
-                shuffle(headgear)
-                shuffle(back_accessory)
-                print("shuffle")
+                shuffle_count = 0
+
+            output.append(gen)
+            skin_tone = skin_tone[1:]
+            hairstyle = hairstyle[1:]
+            attire = attire[1:]
+            accessory = accessory[1:]
+            headgear = headgear[1:]
+            back_accessory = back_accessory[1:]
 
         return output
+
+    tic = time.perf_counter()
 
     male = get_meta("male")
     female = get_meta("female")
@@ -193,6 +241,7 @@ def generate_meta():
     shuffle(meta)
     assign_rearity(meta)
     assign_id_and_save(meta)
+
     print(time.perf_counter() - tic)
 
     return jsonify({
@@ -210,30 +259,7 @@ def cleanup():
 
     to_del = []
     for x in data:
-        if (
-            x["gender"] == "female"
-            and x["headgear"] in ["astra helmet spike",
-                                  "AstraCap", "Astrahelmet", "blackasmask"]
-            and x["hairstyle"] in ["astra hairstyle 4", "astra hairstyle 5",
-                                   "astra hairstyle 13", "astra hairstyle 15"]
-        ):
-            to_del.append(x["id"])
-        elif (
-            x["gender"] == "male"
-            and x["headgear"] in ["blackasspke red", "helmetenticls",
-                                  "IMG-3396", "mech had", "punkhelmet"]
-            and x["hairstyle"] in ["astra hairstyle 4", "astra hairstyle 5",
-                                   "astra hairstyle 7", "astra hairstyle 8",
-                                   "astra hairstyle 9", "astra hairstyle 13"]
-        ):
-            to_del.append(x["id"])
-        elif (
-            x["gender"] == "male"
-            and x["attire"] in ["astra attire 11", "astra attire 24",
-                                "astra attire 25", "astra attire 32",
-                                "astra attire 33", "astra attire 34"]
-            and x["headgear"] == "AstraCap"
-        ):
+        if not is_good(x):
             to_del.append(x["id"])
 
     meta = [x for x in data if x["id"] not in to_del]
