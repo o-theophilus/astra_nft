@@ -1,16 +1,29 @@
 <script context="module">
-	import { backend, count } from '$lib/store.js';
+	import { backend, count, params_page, pagination_temp, params_filter } from '$lib/store.js';
 
 	import Item from './_item.svelte';
 	import Pagination from '$lib/pagination.svelte';
+	import Filter from '$lib/filter.svelte';
+	import Margin from '$lib/c_margin.svelte';
 
 	export async function load({ fetch, url }) {
-		let page = 1;
+		let params = '';
 		if (url.searchParams.has('page')) {
-			page = url.searchParams.get('page');
+			let page = url.searchParams.get('page');
+			params_page.set(page);
+			pagination_temp.set(page);
+			params = `page=${page}`;
+		}
+		if (url.searchParams.has('filter')) {
+			let filter = url.searchParams.get('filter');
+			params_filter.set(filter);
+			params = `${params}&filter=${filter}`;
+		}
+		if (params) {
+			params = `?${params}`;
 		}
 
-		const _resp = await fetch(`${backend}/nft?page=${page}`, {
+		const _resp = await fetch(`${backend}/nft${params}`, {
 			method: 'get',
 			headers: {
 				'Content-Type': 'application/json'
@@ -24,7 +37,8 @@
 			return {
 				props: {
 					metas: resp.data.metas,
-					total_page: resp.data.total_page
+					total_page: resp.data.total_page,
+					filter: resp.data.filter
 				}
 			};
 		}
@@ -34,9 +48,23 @@
 <script>
 	export let metas;
 	export let total_page;
+	export let filter;
 
-	const submit = async (page) => {
-		const _resp = await fetch(`${backend}/nft?page=${page}`, {
+	const submit = async () => {
+		let params = '';
+		if ($params_page) {
+			params = `page=${$params_page}`;
+		}
+		if ($params_filter) {
+			params = `${params}&filter=${$params_filter}`;
+		}
+		if (params) {
+			params = `?${params}`;
+		}
+
+		window.history.pushState('', '', params);
+
+		const _resp = await fetch(`${backend}/nft${params}`, {
 			method: 'get',
 			headers: {
 				'Content-Type': 'application/json'
@@ -51,20 +79,29 @@
 	};
 </script>
 
-<div class="page">
-	{#each metas as meta}
-		<Item {meta} />
-	{/each}
-</div>
+<Filter
+	{filter}
+	on:ok={() => {
+		$params_page = 1;
+		$pagination_temp = 1;
+		submit();
+	}}
+/>
 
-<div class="pagination">
-	<Pagination
-		{total_page}
-		on:ok={(e) => {
-			submit(e.detail);
-		}}
-	/>
-</div>
+<Margin>
+	<div class="page">
+		{#each metas as meta}
+			<Item {meta} />
+		{/each}
+	</div>
+</Margin>
+
+<Pagination
+	{total_page}
+	on:ok={() => {
+		submit();
+	}}
+/>
 
 <style>
 	.page {
@@ -72,7 +109,6 @@
 
 		grid-template-columns: 1fr;
 		gap: var(--gap2);
-		padding: var(--gap2);
 	}
 
 	@media screen and (min-width: 400px) {
@@ -104,9 +140,5 @@
 		.page {
 			grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 		}
-	}
-
-	.pagination {
-		padding: var(--gap2);
 	}
 </style>

@@ -14,20 +14,37 @@ def get_all():
     with open(f"{output}/meta.json") as f:
         data = json.load(f)
 
-    page_no = request.args.get("page")
-    if not page_no:
-        page_no = 1
-    page_no = int(page_no)
-
     male = 0
     female = 0
+    filter = {}
     for x in data:
         if x["gender"] == "male":
             male += 1
         else:
             female += 1
 
-    page_size = 100
+        for y in x:
+            if y in ["rarity", "id"]:
+                continue
+            elif y not in filter:
+                filter[y] = []
+
+            if x[y] not in filter[y]:
+                filter[y].append(x[y])
+
+    page_no = 1
+    if "page" in request.args:
+        page_no = int(request.args["page"])
+
+    fk = None
+    fv = None
+    if "filter" in request.args:
+        fk, fv = request.args["filter"].split("700")
+
+    if fk and fv:
+        data = [x for x in data if x[fk].lower() == fv.lower()]
+
+    page_size = 10
     total_page = ceil(len(data) / page_size)
 
     start = (page_no - 1) * page_size
@@ -40,6 +57,7 @@ def get_all():
         "data": {
             "metas": data,
             "total_page": total_page,
+            "filter": filter,
             "count": {
                 "male": male,
                 "female": female

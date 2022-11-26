@@ -1,13 +1,12 @@
 <script>
-	import { createEventDispatcher, onMount } from 'svelte';
-	import { page } from '$app/stores';
+	import { createEventDispatcher } from 'svelte';
+	import { params_page, pagination_temp } from '$lib/store.js';
 	import Button from './button.svelte';
+	import Margin from '$lib/c_margin.svelte';
 
 	let emit = createEventDispatcher();
 
 	export let total_page = 1;
-	let value = 1;
-	let _value = 1;
 
 	const goto_page = async (p) => {
 		if (p < 1) {
@@ -16,78 +15,72 @@
 			p = total_page;
 		}
 
-		value = p;
-		_value = p;
-		window.history.pushState('', '', `/?page=${value}`);
-		emit('ok', value);
-	};
+		$params_page = p;
+		$pagination_temp = p;
 
-	onMount(() => {
-		if ($page.url.searchParams.has('page')) {
-			let init = parseInt($page.url.searchParams.get('page'));
-			value = init;
-			_value = init;
-		}
-	});
+		emit('ok');
+	};
 
 	let width;
 	let width2;
 </script>
 
-<section>
-	{#if value > 1}
-		<Button
-			name="❮ prev"
-			class="link"
-			color="var(--font2)"
-			on:click={() => {
-				goto_page(value - 1);
-			}}
-		/>
-	{/if}
+<Margin>
+	<section>
+		{#if $params_page > 1}
+			<Button
+				name="❮ prev"
+				class="link"
+				color="var(--font2)"
+				on:click={() => {
+					goto_page($params_page - 1);
+				}}
+			/>
+		{/if}
 
-	<div class="input">
-		<span class="helper" bind:clientWidth={width}>
-			{value}
-		</span>
-		<input
-			style:width="calc({width}px + {width2}px)"
-			size="0"
-			type="number"
-			bind:value={_value}
-			on:keypress={(e) => {
-				if (e.key == 'Enter') {
-					goto_page(_value);
-				}
-			}}
-		/>
-		<div class="total" bind:clientWidth={width2}>
-			of {total_page}
+		<div class="input">
+			<span class="helper" bind:clientWidth={width}>
+				{$params_page}
+			</span>
+			<input
+				style:width="calc({width}px + {width2}px)"
+				size="0"
+				type="number"
+				bind:value={$pagination_temp}
+				on:keypress={(e) => {
+					if (e.key == 'Enter') {
+						goto_page($pagination_temp);
+					}
+				}}
+			/>
+			<div class="total" bind:clientWidth={width2}>
+				of {total_page}
+			</div>
 		</div>
-	</div>
 
-	{#if _value != value}
-		<Button
-			name="go ❯❯"
-			class="link"
-			color="var(--font2)"
-			on:click={() => {
-				goto_page(_value);
-			}}
-		/>
-	{/if}
+		{#if $pagination_temp != $params_page}
+			<Button
+				name="go ❯❯"
+				class="link"
+				color="var(--font2)"
+				on:click={() => {
+					goto_page($pagination_temp);
+				}}
+			/>
+		{/if}
 
-	{#if value < total_page}
-		<Button
-			name="next ❯"
-			class="link"
-			color="var(--font2)"
-			on:click={() => {
-				goto_page(value + 1);
-			}}
-		/>
-	{/if}
-</section>
+		{#if $params_page < total_page}
+			<Button
+				name="next ❯"
+				class="link"
+				color="var(--font2)"
+				on:click={() => {
+					goto_page(parseInt($params_page) + 1);
+				}}
+			/>
+		{/if}
+	</section>
+</Margin>
 
 <style>
 	section {
