@@ -44,7 +44,7 @@ def get_all():
     if fk and fv:
         data = [x for x in data if x[fk].lower() == fv.lower()]
 
-    page_size = 10
+    page_size = 100
     total_page = ceil(len(data) / page_size)
 
     start = (page_no - 1) * page_size
