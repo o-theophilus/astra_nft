@@ -74,6 +74,7 @@
 		if (_resp.ok) {
 			let resp = await _resp.json();
 			metas = resp.data.metas;
+			total_page = resp.data.total_page;
 			window.scrollTo({ top: 0, behavior: 'smooth' });
 		}
 	};
