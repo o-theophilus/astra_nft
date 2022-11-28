@@ -15,7 +15,7 @@ def index():
     })
 
 
-amount_to_generate = 6000
+amount_to_generate = 5000
 
 
 def assign_rearity(meta):
@@ -122,20 +122,20 @@ def is_good(x):
 @bp.post("/distribute_assets")
 def distribute_assets():
 
-    def distribute(amount_to_generate, full_path, allow_empty):
+    def distribute(amount_, full_path, allow_empty):
         files_in_folder = listdir(full_path)
         last_file = files_in_folder[-1]
         count_files = len(files_in_folder)
         if allow_empty:
             count_files += 1
-        sub_count = int(amount_to_generate / count_files)
+        sub_count = int(amount_ / count_files)
 
         for old_name in files_in_folder:
-            img_name, amount_ = old_name.split("#")
-            ext = amount_.split(".")[1]
+            img_name, second_part = old_name.split("#")
+            ext = second_part.split(".")[1]
 
             if not allow_empty and old_name == last_file:
-                sub_count += amount_to_generate % count_files
+                sub_count += amount_ % count_files
 
             new_name = f"{img_name}#{sub_count}.{ext}"
             rename(
@@ -160,7 +160,11 @@ def distribute_assets():
                 or g == "female" and v == "attire"
             ):
                 e = False
-            distribute(amount_to_generate/2, f"{base_path}/{g}/{v}", e)
+
+            distribute(
+                amount_to_generate/2 + 500,
+                f"{base_path}/{g}/{v}", e
+            )
 
     distribute(amount_to_generate, f"{base_path}/background", False)
 
@@ -214,8 +218,6 @@ def generate_meta():
             shuffle(accessory)
             shuffle(headgear)
             shuffle(back_accessory)
-
-            print(f"shuffle - {shuffle_count} - {len(output)}")
 
         output = []
         while len(output) < amount_to_generate/2:
