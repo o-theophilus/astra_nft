@@ -87,7 +87,32 @@ def is_good(x):
         and x["attire"] in ["astra attire 11", "astra attire 24",
                             "astra attire 25", "astra attire 32",
                             "astra attire 33", "astra attire 34"]
-        and x["headgear"] == "AstraCap"
+        and x["headgear"] in ["AstraCap", "mech had", "whyeemaskt"]
+    ):
+        return False
+    elif (
+        x["gender"] == "male"
+        and x["attire"] in ["astra attire 24", "astra attire 25",
+                            "astra attire 34"]
+        and x["headgear"] in ["blackasspke red", "helmetenticls",
+                              "punkhelmet"]
+    ):
+        return False
+    elif (
+        x["gender"] == "male"
+        and x["attire"] in ["astra attire 34"]
+        and x["headgear"] in ["IMG-2971", "IMG-3376", "IMG-3385",
+                              "IMG-3397", "IMG-4122", "obsidian shades"]
+    ):
+        return False
+    elif (
+        x["gender"] == "male"
+        and x["attire"] in ["astra attire 11", "astra attire 24",
+                            "astra attire 25", "astra attire 32",
+                            "astra attire 33", "astra attire 34"]
+        and x["hairstyle"] in ["astra hairstyle 4", "astra hairstyle 5",
+                               "astra hairstyle 7", "astra hairstyle 8",
+                               "astra hairstyle 9", "astra hairstyle 13"]
     ):
         return False
 
@@ -190,6 +215,8 @@ def generate_meta():
             shuffle(headgear)
             shuffle(back_accessory)
 
+            print(f"shuffle - {shuffle_count} - {len(output)}")
+
         output = []
         while len(output) < amount_to_generate/2:
             gen = {
@@ -202,11 +229,11 @@ def generate_meta():
                 "back_accessory": back_accessory[0]
             }
 
-            # if not is_good(gen):
-            #     shuffle_it()
-            #     continue
-            # else:
-            #     shuffle_count = 0
+            if not is_good(gen):
+                shuffle_it()
+                continue
+            else:
+                shuffle_count = 0
 
             temp = [*output, gen]
             temp = list(map(dict, set(
