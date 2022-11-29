@@ -75,7 +75,22 @@ def is_good(x):
         return False
     elif (
         x["gender"] == "female"
-        and x["headgear"] == "AstraCap"
+        and x["headgear"] in ["astra helmet spike",
+                              "Astrahelmet", "blackasmask"]
+        and x["accessory"] == "white pearrl neclace"
+    ):
+        return False
+    elif (
+        x["gender"] == "female"
+        and x["attire"] == "astra attire 21"
+        and x["accessory"] == "white pearrl neclace"
+        and x['headgear'] in ["gob mask", "mask"]
+    ):
+        return False
+    elif (
+        x["gender"] == "female"
+        and x["headgear"] in ["astra helmet spike",
+                              "AstraCap", "Astrahelmet", "blackasmask"]
         and x['attire'] in [
             "astra attire 24", "astra attire 21", "astra attire 35"]
     ):
@@ -91,6 +106,7 @@ def is_good(x):
         )
     ):
         return False
+
     elif (
         x["gender"] == "male"
         and x["headgear"] in ["blackasspke red", "helmetenticls",

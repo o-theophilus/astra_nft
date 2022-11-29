@@ -34,6 +34,20 @@ def generate_photo(meta):
         photo = Image.alpha_composite(photo, get_v("headgear"))
         photo = Image.alpha_composite(photo, get_v("attire"))
         photo = Image.alpha_composite(photo, get_v("accessory"))
+    elif (
+        meta['gender'] == "male"
+        and meta['headgear'] in ["blackasspke red", "focus mask",
+                                 "helmetenticls", "memask",
+                                 "punkhelmet", "whyeemaskt"]
+        and meta['accessory'] in ["astra accessory 2", "astra accessory 3",
+                                  "astra accessory 4"]
+        or meta['gender'] == "female"
+        and meta['headgear'] in ["gob mask", "mask"]
+        and meta['accessory'] == "white pearrl neclace"
+    ):
+        photo = Image.alpha_composite(photo, get_v("attire"))
+        photo = Image.alpha_composite(photo, get_v("accessory"))
+        photo = Image.alpha_composite(photo, get_v("headgear"))
     else:
         photo = Image.alpha_composite(photo, get_v("attire"))
         photo = Image.alpha_composite(photo, get_v("headgear"))
