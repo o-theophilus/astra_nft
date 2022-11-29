@@ -24,9 +24,20 @@ def generate_photo(meta):
         return photo
 
     photo = Image.alpha_composite(get_v("skin_tone"), get_v("hairstyle"))
-    photo = Image.alpha_composite(photo, get_v("attire"))
-    photo = Image.alpha_composite(photo, get_v("accessory"))
-    photo = Image.alpha_composite(photo, get_v("headgear"))
+    if (
+        meta['gender'] == "female"
+        and meta['attire'] in [
+            "astra attire 24", "astra attire 21", "astra attire 35"]
+        or meta['gender'] == "male"
+        and meta['attire'] in ["astra attire 24", "astra attire 25"]
+    ):
+        photo = Image.alpha_composite(photo, get_v("headgear"))
+        photo = Image.alpha_composite(photo, get_v("attire"))
+        photo = Image.alpha_composite(photo, get_v("accessory"))
+    else:
+        photo = Image.alpha_composite(photo, get_v("attire"))
+        photo = Image.alpha_composite(photo, get_v("headgear"))
+        photo = Image.alpha_composite(photo, get_v("accessory"))
     photo = Image.alpha_composite(get_v("back_accessory"), photo)
     photo = Image.alpha_composite(
         get_v("background", True).convert(mode="RGBA"), photo)
