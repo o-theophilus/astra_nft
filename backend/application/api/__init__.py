@@ -90,6 +90,13 @@ def is_good(x):
         return False
     elif (
         x["gender"] == "female"
+        and x["attire"] == "astra attire 23"
+        and x['hairstyle'] not in ["astra hairstyle 2", "astra hairstyle 8",
+                                   "none"]
+    ):
+        return False
+    elif (
+        x["gender"] == "female"
         and x["headgear"] in ["astra helmet spike",
                               "AstraCap", "Astrahelmet", "blackasmask"]
         and x['attire'] in [

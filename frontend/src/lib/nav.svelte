@@ -3,8 +3,7 @@
 </script>
 
 <nav>
-	<b> Astra NFT - 5000
-		 <!-- (m:{$count.male}, f:{$count.female})</b> -->
+	<b> Astra NFT - {$count.male + $count.female}</b>
 </nav>
 
 <style>
