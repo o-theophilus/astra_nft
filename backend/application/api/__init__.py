@@ -110,7 +110,7 @@ def is_good(x):
     elif (
         x["gender"] == "male"
         and x["headgear"] in ["blackasspke red", "helmetenticls",
-                              "IMG-3396", "mech had", "punkhelmet"]
+                              "IMG-3396", "mech had", "punkhelmet", "AstraCap"]
         and x["hairstyle"] in ["astra hairstyle 4", "astra hairstyle 5",
                                "astra hairstyle 7", "astra hairstyle 8",
                                "astra hairstyle 9", "astra hairstyle 13"]
