@@ -16,6 +16,7 @@ def index():
 
 
 amount_to_generate = 5000
+buffer = 250
 
 
 def assign_rearity(meta):
@@ -196,7 +197,7 @@ def distribute_assets():
                 e = False
 
             distribute(
-                amount_to_generate/2 + 500,
+                amount_to_generate/2 + buffer,
                 f"{base_path}/{g}/{v}", e
             )
 
@@ -222,7 +223,8 @@ def generate_meta():
             temp = [img_name for _ in range(amount)]
             output = [*output, *temp]
 
-        amount = int(amount_to_generate/2 - len(output))
+        amount = int(amount_to_generate/2 + buffer - len(output))
+
         if amount > 0:
             temp = ["none" for _ in range(amount)]
             output = [*output, *temp]
