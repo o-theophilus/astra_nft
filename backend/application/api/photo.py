@@ -30,6 +30,7 @@ def generate_photo(meta):
             "astra attire 24", "astra attire 21", "astra attire 35"]
         or meta['gender'] == "male"
         and meta['attire'] in ["astra attire 24", "astra attire 25"]
+        and meta['headgear'] not in ["focus mask", "memask"]
     ):
         photo = Image.alpha_composite(photo, get_v("headgear"))
         photo = Image.alpha_composite(photo, get_v("attire"))

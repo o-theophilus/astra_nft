@@ -143,7 +143,16 @@ def is_good(x):
             x["attire"] in ["astra attire 11", "astra attire 24",
                             "astra attire 25", "astra attire 32",
                             "astra attire 33", "astra attire 34"]
-            and x["headgear"] in ["AstraCap", "mech had", "whyeemaskt"]
+            and (
+                x["headgear"] in ["AstraCap", "mech had", "whyeemaskt"]
+                or x["hairstyle"] in ["astra hairstyle 3", "astra hairstyle 4",
+                                      "astra hairstyle 5", "astra hairstyle 7",
+                                      "astra hairstyle 8", "astra hairstyle 9",
+                                      "astra hairstyle 13",
+                                      "astra hairstyle 15"]
+                or x["accessory"] in ["astra accessory 2", "astra accessory 3",
+                                      "astra accessory 4"]
+            )
         ):
             return False
         elif (
@@ -157,15 +166,6 @@ def is_good(x):
             x["attire"] in ["astra attire 34"]
             and x["headgear"] in ["IMG-2971", "IMG-3376", "IMG-3385",
                                   "IMG-3397", "IMG-4122", "obsidian shades"]
-        ):
-            return False
-        elif (
-            x["attire"] in ["astra attire 11", "astra attire 24",
-                            "astra attire 25", "astra attire 32",
-                            "astra attire 33", "astra attire 34"]
-            and x["hairstyle"] in ["astra hairstyle 4", "astra hairstyle 5",
-                                   "astra hairstyle 7", "astra hairstyle 8",
-                                   "astra hairstyle 9", "astra hairstyle 13"]
         ):
             return False
 
@@ -237,11 +237,6 @@ def get_list(variation, gender="", fill=0):
         temp = [img_name for _ in range(amount)]
         output = [*output, *temp]
 
-    # amount = int(amount_to_gen + buffer - len(output))
-
-    # if amount > 0:
-    #     temp = ["none" for _ in range(amount)]
-    #     output = [*output, *temp]
     if fill > 0:
         fill = int(fill + buffer - len(output))
         # if fill > 0:
@@ -362,6 +357,7 @@ def cleanup():
             else:
                 bad_male += 1
 
+    print(len(bad))
     bare_meta = []
     for x in meta:
         bare_meta.append({
