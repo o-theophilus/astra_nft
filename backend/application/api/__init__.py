@@ -19,7 +19,7 @@ amount_to_generate = 5000
 buffer = 250
 
 
-def assign_rearity(meta):
+def assign_rarity(meta):
     all_variation = []
     unique_variation = []
     for x in meta:
@@ -53,13 +53,15 @@ def assign_rearity(meta):
         x["rarity"] = i + 1
 
 
-def assign_id_and_save(meta):
+def assign_id(meta):
+    for i, x in enumerate(meta):
+        x["id"] = i + 1
+
+
+def save(meta):
     output_folder = f"{getcwd()}/static"
     if not path.exists(output_folder):
         mkdir(output_folder)
-
-    for i, x in enumerate(meta):
-        x["id"] = i + 1
 
     with open(f"{output_folder}/meta.json", 'w+') as f:
         json.dump(meta, f, indent=4)
@@ -225,94 +227,98 @@ def distribute_assets():
     })
 
 
+def get_list(variation, gender="", fill=0):
+    output = []
+    for img_name in listdir(f"{getcwd()}/assets/{gender}/{variation}"):
+        img_name, amount = img_name.split("#")
+        amount = amount.split(".")[0]
+        amount = int(amount)
+
+        temp = [img_name for _ in range(amount)]
+        output = [*output, *temp]
+
+    # amount = int(amount_to_gen + buffer - len(output))
+
+    # if amount > 0:
+    #     temp = ["none" for _ in range(amount)]
+    #     output = [*output, *temp]
+    if fill > 0:
+        fill = int(fill + buffer - len(output))
+        # if fill > 0:
+        temp = ["none" for _ in range(fill)]
+        output = [*output, *temp]
+
+    shuffle(output)
+    return output
+
+
+def dict_in_list(dict_, list_):
+    temp = [*list_, dict_]
+    temp = list(map(dict, set(
+        tuple(sorted(sub.items())) for sub in temp)))
+
+    return len(list_) == len(temp)
+
+
+def get_meta(gender, amount):
+    skin_tone = get_list("skin_tone", gender)
+    hairstyle = get_list("hairstyle", gender, amount)
+    attire = get_list("attire", gender, amount)
+    accessory = get_list("accessory", gender, amount)
+    headgear = get_list("headgear", gender, amount)
+    back_accessory = get_list("back_accessory", gender, amount)
+
+    shuffle_count = 0
+
+    def shuffle_it():
+        nonlocal shuffle_count
+        shuffle_count += 1
+        if shuffle_count == 100:
+            raise ValueError("stalemate")
+
+        shuffle(skin_tone)
+        shuffle(hairstyle)
+        shuffle(attire)
+        shuffle(accessory)
+        shuffle(headgear)
+        shuffle(back_accessory)
+
+    output = []
+    while len(output) < amount:
+        gen = {
+            "gender": gender,
+            "skin_tone": skin_tone[0],
+            "hairstyle": hairstyle[0],
+            "attire": attire[0],
+            "accessory": accessory[0],
+            "headgear": headgear[0],
+            "back_accessory": back_accessory[0]
+        }
+
+        if not is_good(gen) or dict_in_list(gen, output):
+            shuffle_it()
+            continue
+        else:
+            shuffle_count = 0
+
+        output.append(gen)
+        skin_tone = skin_tone[1:]
+        hairstyle = hairstyle[1:]
+        attire = attire[1:]
+        accessory = accessory[1:]
+        headgear = headgear[1:]
+        back_accessory = back_accessory[1:]
+
+    return output
+
+
 @bp.get("/generate_meta")
 def generate_meta():
-    asset_path = f"{getcwd()}/assets"
-
-    def get_list(variation, gender=""):
-        output = []
-        for img_name in listdir(f"{asset_path}/{gender}/{variation}"):
-            img_name, amount = img_name.split("#")
-            amount = amount.split(".")[0]
-            amount = int(amount)
-
-            temp = [img_name for _ in range(amount)]
-            output = [*output, *temp]
-
-        amount = int(amount_to_generate/2 + buffer - len(output))
-
-        if amount > 0:
-            temp = ["none" for _ in range(amount)]
-            output = [*output, *temp]
-
-        shuffle(output)
-        return output
-
-    def get_meta(gender):
-        skin_tone = get_list("skin_tone", gender)
-        hairstyle = get_list("hairstyle", gender)
-        attire = get_list("attire", gender)
-        accessory = get_list("accessory", gender)
-        headgear = get_list("headgear", gender)
-        back_accessory = get_list("back_accessory", gender)
-
-        shuffle_count = 0
-
-        def shuffle_it():
-            nonlocal shuffle_count
-            shuffle_count += 1
-            if shuffle_count == 100:
-                raise ValueError("stalemate")
-
-            shuffle(skin_tone)
-            shuffle(hairstyle)
-            shuffle(attire)
-            shuffle(accessory)
-            shuffle(headgear)
-            shuffle(back_accessory)
-
-        output = []
-        while len(output) < amount_to_generate/2:
-            gen = {
-                "gender": gender,
-                "skin_tone": skin_tone[0],
-                "hairstyle": hairstyle[0],
-                "attire": attire[0],
-                "accessory": accessory[0],
-                "headgear": headgear[0],
-                "back_accessory": back_accessory[0]
-            }
-
-            if not is_good(gen):
-                shuffle_it()
-                continue
-            else:
-                shuffle_count = 0
-
-            temp = [*output, gen]
-            temp = list(map(dict, set(
-                tuple(sorted(sub.items())) for sub in temp)))
-
-            if len(output) == len(temp):
-                shuffle_it()
-                continue
-            else:
-                shuffle_count = 0
-
-            output.append(gen)
-            skin_tone = skin_tone[1:]
-            hairstyle = hairstyle[1:]
-            attire = attire[1:]
-            accessory = accessory[1:]
-            headgear = headgear[1:]
-            back_accessory = back_accessory[1:]
-
-        return output
 
     tic = time.perf_counter()
 
-    male = get_meta("male")
-    female = get_meta("female")
+    male = get_meta("male", amount_to_generate/2)
+    female = get_meta("female", amount_to_generate/2)
     meta = [*male, *female]
 
     background = get_list("background")
@@ -320,8 +326,9 @@ def generate_meta():
         x["background"] = background[i]
 
     shuffle(meta)
-    assign_rearity(meta)
-    assign_id_and_save(meta)
+    assign_rarity(meta)
+    assign_id(meta)
+    save(meta)
 
     print(time.perf_counter() - tic)
 
@@ -333,19 +340,78 @@ def generate_meta():
 
 @bp.post("/cleanup")
 def cleanup():
-    output = f"{getcwd()}/static"
+    replace = []
+    tic = time.perf_counter()
 
+    output = f"{getcwd()}/static"
     with open(f"{output}/meta.json") as f:
         data = json.load(f)
 
-    to_del = []
-    for x in data:
-        if not is_good(x):
-            to_del.append(x["id"])
+    meta = []
+    bad = []
+    bad_female = 0
+    bad_male = 0
 
-    meta = [x for x in data if x["id"] not in to_del]
-    assign_rearity(meta)
-    assign_id_and_save(meta)
+    for x in data:
+        if is_good(x) and x["id"] not in replace:
+            meta.append(x)
+        else:
+            bad.append(x)
+            if x["gender"] == "female":
+                bad_female += 1
+            else:
+                bad_male += 1
+
+    bare_meta = []
+    for x in meta:
+        bare_meta.append({
+            "gender": x["gender"],
+            "skin_tone": x["skin_tone"],
+            "hairstyle": x["hairstyle"],
+            "attire": x["attire"],
+            "accessory": x["accessory"],
+            "headgear": x["headgear"],
+            "back_accessory": x["back_accessory"]
+        })
+
+    female = get_meta("female", 250) if bad_female > 0 else []
+    male = get_meta("male", 250) if bad_male > 0 else []
+
+    for x in bad:
+        found = False
+        while not found:
+            if x["gender"] == "female":
+                gen = female[0]
+            else:
+                gen = male[0]
+
+            if not dict_in_list(gen, bare_meta):
+                found = True
+                if x["gender"] == "female":
+                    bad_female -= 0
+                else:
+                    bad_male -= 0
+
+                gen["background"] = x["background"]
+                gen["rarity"] = 0
+                gen["id"] = x["id"]
+                meta.append(gen)
+
+            if x["gender"] == "female":
+                female = female[1:]
+            else:
+                male = female[1:]
+
+            if len(female) == 0 and bad_female > 0:
+                female = get_meta("female", 250)
+            if len(male) == 0 and bad_male > 0:
+                male = get_meta("male", 250)
+
+    meta = sorted(meta, key=lambda d: d["id"], reverse=False)
+    assign_rarity(meta)
+    save(meta)
+
+    print(time.perf_counter() - tic)
 
     return jsonify({
         "status": 200,
