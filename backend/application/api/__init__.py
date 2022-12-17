@@ -144,7 +144,9 @@ def is_good(x):
                             "astra attire 25", "astra attire 32",
                             "astra attire 33", "astra attire 34"]
             and (
-                x["headgear"] in ["AstraCap", "mech had", "whyeemaskt"]
+                x["headgear"] in ["AstraCap", "mech had", "whyeemaskt",
+                                  "blackasspke red", "helmetenticls",
+                                  "punkhelmet"]
                 or x["hairstyle"] in ["astra hairstyle 3", "astra hairstyle 4",
                                       "astra hairstyle 5", "astra hairstyle 7",
                                       "astra hairstyle 8", "astra hairstyle 9",
@@ -153,13 +155,6 @@ def is_good(x):
                 or x["accessory"] in ["astra accessory 2", "astra accessory 3",
                                       "astra accessory 4"]
             )
-        ):
-            return False
-        elif (
-            x["attire"] in ["astra attire 24", "astra attire 25",
-                            "astra attire 34"]
-            and x["headgear"] in ["blackasspke red", "helmetenticls",
-                                  "punkhelmet"]
         ):
             return False
         elif (
