@@ -16,7 +16,7 @@ def index():
 
 
 amount_to_generate = 10000
-buffer = 600
+buffer = 1000
 
 
 def assign_rarity(meta):
@@ -233,7 +233,7 @@ def get_list(variation, gender="", fill=0):
         output = [*output, *temp]
 
     if fill > 0:
-        fill = int(fill + buffer - len(output))
+        fill = int(fill - len(output))
         temp = ["none" for _ in range(fill)]
         output = [*output, *temp]
 
@@ -251,18 +251,20 @@ def dict_in_list(dict_, list_):
 
 def get_meta(gender, amount):
     skin_tone = get_list("skin_tone", gender)
-    hairstyle = get_list("hairstyle", gender, amount)
+    hairstyle = get_list("hairstyle", gender, amount+buffer)
     attire = get_list("attire", gender, 0 if gender == "female" else amount)
-    accessory = get_list("accessory", gender, amount)
-    headgear = get_list("headgear", gender, amount)
-    back_accessory = get_list("back_accessory", gender, amount)
+    accessory = get_list("accessory", gender, amount+buffer)
+    headgear = get_list("headgear", gender, amount+buffer)
+    back_accessory = get_list("back_accessory", gender, amount+buffer)
 
     shuffle_count = 0
 
     def shuffle_it():
         nonlocal shuffle_count
         shuffle_count += 1
-        if shuffle_count == 100:
+        if shuffle_count == 1000:
+            print(gender)
+            print((len(output)))
             raise ValueError("stalemate")
 
         shuffle(skin_tone)
