@@ -96,4 +96,8 @@
 		flex-wrap: wrap;
 		gap: var(--gap1);
 	}
+
+	option{
+		text-transform: capitalize;
+	}
 </style>

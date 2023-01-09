@@ -15,8 +15,8 @@ def index():
     })
 
 
-amount_to_generate = 5000
-buffer = 250
+amount_to_generate = 10000
+buffer = 600
 
 
 def assign_rarity(meta):
@@ -183,9 +183,9 @@ def distribute_assets():
             ext = second_part.split(".")[1]
 
             if not allow_empty and old_name == last_file:
-                sub_count += amount_ % count_files
+                sub_count += int(amount_ % count_files)
 
-            new_name = f"{img_name}#{sub_count}.{ext}"
+            new_name = f"{img_name}#{sub_count}.{ext.lower()}"
             rename(
                 f"{full_path}/{old_name}",
                 f"{full_path}/{new_name}"
@@ -210,7 +210,7 @@ def distribute_assets():
                 e = False
 
             distribute(
-                amount_to_generate/2 + buffer,
+                amount_to_generate/2,
                 f"{base_path}/{g}/{v}", e
             )
 
@@ -234,7 +234,6 @@ def get_list(variation, gender="", fill=0):
 
     if fill > 0:
         fill = int(fill + buffer - len(output))
-        # if fill > 0:
         temp = ["none" for _ in range(fill)]
         output = [*output, *temp]
 
@@ -253,7 +252,7 @@ def dict_in_list(dict_, list_):
 def get_meta(gender, amount):
     skin_tone = get_list("skin_tone", gender)
     hairstyle = get_list("hairstyle", gender, amount)
-    attire = get_list("attire", gender, amount)
+    attire = get_list("attire", gender, 0 if gender == "female" else amount)
     accessory = get_list("accessory", gender, amount)
     headgear = get_list("headgear", gender, amount)
     back_accessory = get_list("back_accessory", gender, amount)
@@ -352,7 +351,6 @@ def cleanup():
             else:
                 bad_male += 1
 
-    print(len(bad))
     bare_meta = []
     for x in meta:
         bare_meta.append({
@@ -403,6 +401,22 @@ def cleanup():
     save(meta)
 
     print(time.perf_counter() - tic)
+
+    return jsonify({
+        "status": 200,
+        "message": "ok"
+    })
+
+
+@bp.post("/shuffle")
+def shuffle_it():
+    output = f"{getcwd()}/static"
+    with open(f"{output}/meta.json") as f:
+        meta = json.load(f)
+
+    shuffle(meta)
+    assign_id(meta)
+    save(meta)
 
     return jsonify({
         "status": 200,

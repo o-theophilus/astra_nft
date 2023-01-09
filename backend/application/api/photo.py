@@ -8,7 +8,7 @@ bp = Blueprint("photo", __name__)
 
 
 def generate_photo(meta):
-    """Build photos"""
+    """Build photo from meta"""
 
     def get_v(v, bg=False):
         if meta[v] != "none":
