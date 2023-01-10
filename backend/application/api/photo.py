@@ -39,7 +39,9 @@ def generate_photo(meta):
         meta['gender'] == "male"
         and meta['headgear'] in ["blackasspke red", "focus mask",
                                  "helmetenticls", "memask",
-                                 "punkhelmet", "whyeemaskt"]
+                                 "punkhelmet", "whyeemaskt"
+                                 "IMG-4101", "IMG-4102",
+                                 "IMG-4103", "IMG-4104"]
         and meta['accessory'] in ["astra accessory 2", "astra accessory 3",
                                   "astra accessory 4"]
         or meta['gender'] == "female"
