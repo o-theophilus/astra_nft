@@ -31,7 +31,7 @@
 			<div class="content">
 				<img src="{backend}/photo/{$module.id}" alt={$module.id} />
 				<div class="details">
-					<span>id: <b>{$module.id}</b></span>
+					<span>Astra: <b>#{$module.id}</b></span>
 					<span>rarity rank: <b>{$module.rarity} / {$count.male + $count.female}</b></span>
 					<br />
 

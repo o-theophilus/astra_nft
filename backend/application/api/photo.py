@@ -17,7 +17,7 @@ def generate_photo(meta):
                 asset_path = f"{getcwd()}/assets/background"
 
             for img_name in listdir(asset_path):
-                if img_name.split("#")[0] == meta[v]:
+                if img_name.split(".")[0] == meta[v]:
                     photo = Image.open(f"{asset_path}/{img_name}")
         else:
             photo = Image.new('RGBA', (2000, 2000), (0, 0, 0, 0))

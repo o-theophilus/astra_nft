@@ -6,12 +6,6 @@
 
 
 
-#distribute_assets
-post  {{host}}/distribute_assets HTTP/1.1
-content-type: application/json
-###
-
-
 #generate_meta
 get  {{host}}/generate_meta HTTP/1.1
 content-type: application/json

@@ -10,7 +10,7 @@
 >
 	<img src="{backend}/photo/{meta.id}/thumbnail" alt={meta.id} />
 	<div class="details">
-		id: <b>{meta.id}</b>
+		Astra <b>#{meta.id}</b>
 	</div>
 </section>
 
