@@ -1,18 +1,22 @@
-from flask import Flask
+from flask import Flask, jsonify
 from flask_cors import CORS
 
-from .api import bp as api
-from .api.photo import bp as photo
-from .api.nft import bp as nft
+from . import urls
+from . import urls_private
 
 
-def create_app(config_file="config.py"):
+def create_app():
     app = Flask(__name__)
-    app.config.from_pyfile(config_file)
+    app.config.from_prefixed_env()
     CORS(app)
 
-    app.register_blueprint(api)
-    app.register_blueprint(photo)
-    app.register_blueprint(nft)
+    @app.get("/")
+    def index():
+        return jsonify({
+            "status": 200,
+            "message": "Welcome"
+        })
 
+    app.register_blueprint(urls.bp)
+    app.register_blueprint(urls_private.bp)
     return app

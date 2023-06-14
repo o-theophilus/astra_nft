@@ -1,7 +1,4 @@
-.env
 __pycache__
 *.pyc
-# static
-./meji.db
-meji.db
-*.db
+.venv
+.env
