@@ -68,7 +68,7 @@
 			submit();
 		}}
 	>
-		filter
+		Filter
 	</button>
 	<button
 		class="clear"
