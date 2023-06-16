@@ -92,7 +92,8 @@ def photo(id, thumbnail=False):
 
     scale = 1000
     if thumbnail:
-        scale /= 5
+        scale = int(scale / 5)
+        print(scale)
 
     photo = ImageOps.fit(photo, (scale, scale), Image.ANTIALIAS)
 
