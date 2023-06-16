@@ -90,12 +90,11 @@ def photo(id, thumbnail=False):
 
     photo = generate_photo(meta)
 
-    photo = ImageOps.fit(photo, (1000, 1000), Image.ANTIALIAS)
+    scale = 1000
     if thumbnail:
-        x = 5
-        width = int(1000/x)
-        height = int(1000/x)
-        photo = ImageOps.fit(photo, (width, height), Image.ANTIALIAS)
+        scale /= 5
+
+    photo = ImageOps.fit(photo, (scale, scale), Image.ANTIALIAS)
 
     photo_file = BytesIO()
     photo.save(photo_file, format="PNG")
