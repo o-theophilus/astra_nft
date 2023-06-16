@@ -53,14 +53,7 @@ def save(meta):
         json.dump(meta, f, indent=4)
 
 
-def has_duplicate1(a_list):
-    a = len(a_list)
-    a_list = list(map(dict, set(
-        tuple(sorted(sub.items())) for sub in a_list)))
-    return a != len(a_list)
-
-
-def has_duplicate2(a_list):
+def has_duplicate(a_list):
     seen = []
     return any(i in seen or seen.append(i) for i in a_list)
 
@@ -68,22 +61,14 @@ def has_duplicate2(a_list):
 def get_meta(gender, a_list):
     gen = {}
 
-    traits = ["skin_tone", "hairstyle", "attire",
-              "accessory", "headgear", "back_accessory"]
+    for x in ["skin_tone", "hairstyle", "attire", "accessory", "headgear",
+              "back_accessory", "background", "frame"]:
+        if x in ["background", "frame"]:
+            trait = weights[x]
+        else:
+            trait = weights[gender][x]
 
-    for trait in traits:
-        gen[trait] = choices(
-            [k for k in weights[gender][trait]],
-            [weights[gender][trait][k] for k in weights[gender][trait]]
-        )[0]
-    gen["background"] = choices(
-        [k for k in weights["background"]],
-        [weights["background"][k] for k in weights["background"]]
-    )[0]
-    gen["frame"] = choices(
-        [k for k in weights["frame"]],
-        [weights["frame"][k] for k in weights["frame"]]
-    )[0]
+        gen[x] = choices([k for k in trait], [trait[k] for k in trait])[0]
     gen["gender"] = gender
 
     if gen in a_list or not is_good(gen):

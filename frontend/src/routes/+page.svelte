@@ -62,11 +62,11 @@
 
 <style>
 	.page {
-		margin: var(--gap2);
+		margin: var(--sp2);
 		display: grid;
 
 		grid-template-columns: 1fr;
-		gap: var(--gap2);
+		gap: var(--sp2);
 	}
 
 	@media screen and (min-width: 400px) {

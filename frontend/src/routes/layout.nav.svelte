@@ -3,25 +3,31 @@
 </script>
 
 <nav>
-	<b> Astra NFT - {$nft_count.male + $nft_count.female}</b>
+	<div class="block">
+		<img src="./image/logo.png" alt="" />
+		{($nft_count.male + $nft_count.female).toLocaleString()} NFT
+	</div>
 </nav>
 
 <style>
 	nav {
-		display: flex;
-		align-items: center;
-		justify-content: center;
-
 		position: sticky;
 		top: 0;
 		z-index: 2;
 
-		padding: 0 var(--gap2);
-		background-color: var(--color3);
+		background: linear-gradient(to top right, var(--cl0), var(--cl1));
 		color: var(--ac5_);
-		height: var(--headerHeight);
 	}
-	b {
-		font-size: large;
+	.block {
+		display: flex;
+		align-items: center;
+		gap: var(--sp2);
+		justify-content: space-between;
+
+		width: 100%;
+		max-width: 800px;
+		height: var(--headerHeight);
+		padding: 0 var(--sp2);
+		margin: auto;
 	}
 </style>

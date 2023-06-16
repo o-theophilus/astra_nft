@@ -20,6 +20,7 @@
 	let width1;
 	let width2;
 
+	let test;
 </script>
 
 <section>
@@ -34,12 +35,9 @@
 	{/if}
 
 	<div class="input">
-		<span class="helper" bind:clientWidth={width1}>
-			{$page_no}
-		</span>
+		<!-- size="0" -->
 		<input
 			style:width="calc({width1}px + {width2}px)"
-			size="0"
 			type="number"
 			bind:value={$page_no_temp}
 			on:keypress={(e) => {
@@ -48,8 +46,13 @@
 				}
 			}}
 		/>
+		<span class="helper" bind:clientWidth={width1}>
+			{#if $page_no_temp}
+				{$page_no_temp}
+			{/if}
+		</span>
 		<div class="total" bind:clientWidth={width2}>
-			of {$total_page}
+			/ {$total_page}
 		</div>
 	</div>
 
@@ -78,7 +81,9 @@
 	section {
 		display: flex;
 		justify-content: center;
-		gap: var(--gap1);
+		gap: var(--sp1);
+
+		padding: var(--sp2);
 	}
 
 	.input {
@@ -87,36 +92,15 @@
 		align-items: center;
 	}
 
-	input {
-		padding: var(--gap1);
-
-		background: transparent;
-		font-weight: 500;
-		margin-right: 2px;
-
-		border-radius: var(--br1);
-		border: 2px solid var(--ac5);
-
-		color: var(--ac1);
-	}
-
-	input:hover {
-		border-color: var(--midtone);
-	}
-	input:focus {
-		border-color: var(--color1);
-	}
-	.total {
-		position: absolute;
-		right: calc(var(--gap1) + 4px);
-		pointer-events: none;
-		font-size: small;
-	}
-
 	.helper {
 		position: absolute;
 		visibility: hidden;
 
-		padding: calc(var(--gap1) + 4px);
+		padding: calc(var(--sp1) + 5px);
+	}
+	.total {
+		position: absolute;
+		right: calc(var(--sp1) + 4px);
+		pointer-events: none;
 	}
 </style>

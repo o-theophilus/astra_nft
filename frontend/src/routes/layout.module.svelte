@@ -12,7 +12,7 @@
 			$module = '';
 		}}
 	>
-		<div class="block" transition:scale|local={{ delay: 0, duration: 200, easing: backInOut }}>
+		<div class="content" transition:scale|local={{ delay: 0, duration: 200, easing: backInOut }}>
 			<button
 				on:keypress
 				on:click={() => {
@@ -25,24 +25,22 @@
 					/>
 				</svg>
 			</button>
-			<div class="content">
-				<img src="{import.meta.env.VITE_BACKEND}/photo/{$module.id}" alt={$module.id} />
-				<div class="details">
-					<span>Astra: <b>#{$module.id}</b></span>
-					<span>rarity rank: <b>{$module.rarity} / {$nft_count.male + $nft_count.female}</b></span>
-					<br />
+			<img src="{import.meta.env.VITE_BACKEND}/photo/{$module.id}" alt={$module.id} />
+			<div class="details">
+				<span>Astra: <b>#{$module.id}</b></span>
+				<span>rarity rank: <b>{$module.rarity} / {$nft_count.male + $nft_count.female}</b></span>
+				<br />
 
-					<b>Traits</b>
-					<span>gender: <b>{$module.gender}</b></span>
-					<span>skin tone: <b>{$module.skin_tone}</b></span>
-					<span>attire: <b>{$module.attire}</b></span>
-					<span>accessory: <b>{$module.accessory}</b></span>
-					<span>headgear: <b>{$module.headgear}</b></span>
-					<span>hairstyle: <b>{$module.hairstyle}</b></span>
-					<span>back accessory: <b>{$module.back_accessory}</b></span>
-					<span>frame: <b>{$module.frame}</b></span>
-					<span>background: <b>{$module.background}</b></span>
-				</div>
+				<b>Traits</b>
+				<span>gender: <b>{$module.gender}</b></span>
+				<span>skin tone: <b>{$module.skin_tone}</b></span>
+				<span>attire: <b>{$module.attire}</b></span>
+				<span>accessory: <b>{$module.accessory}</b></span>
+				<span>headgear: <b>{$module.headgear}</b></span>
+				<span>hairstyle: <b>{$module.hairstyle}</b></span>
+				<span>back accessory: <b>{$module.back_accessory}</b></span>
+				<span>frame: <b>{$module.frame}</b></span>
+				<span>background: <b>{$module.background}</b></span>
 			</div>
 		</div>
 	</section>
@@ -71,27 +69,24 @@
 
 	button:hover {
 		fill: var(--ac5_);
-		background-color: var(--color4);
+		background-color: var(--cl4);
 	}
 
 	section {
-		display: grid;
+		display: flex;
 		align-items: center;
 		justify-content: center;
 
 		position: fixed;
 		inset: 0;
 		top: var(--headerHeight);
+		height: (100vh - var(--headerHeight));
 		z-index: 1;
 
-		padding: var(--gap3);
+		padding: var(--sp3);
+
 		overflow-y: auto;
-
 		background-color: var(--overlay);
-	}
-
-	.block {
-		position: relative;
 	}
 
 	.content,
@@ -101,29 +96,30 @@
 	}
 
 	.content {
-		gap: var(--gap2);
+		position: relative;
+		gap: var(--sp2);
 
 		width: 100%;
-		padding: var(--gap2);
+		max-width: 500px;
+		padding: var(--sp2);
 		border-radius: var(--br1);
-		overflow: hidden;
 
 		background-color: var(--ac4);
 		box-shadow: var(--shad1);
-
-		transition: var(--trans1);
 	}
 
 	img {
 		border-radius: var(--br1);
-		max-width: 500px;
 		width: 100%;
+		aspect-ratio: 1/1;
+
+		background-image: url('./image/loading.png');
+		background-size: cover;
 	}
 
 	.details {
 		font-size: small;
 		align-items: center;
-
 		text-transform: capitalize;
 	}
 </style>

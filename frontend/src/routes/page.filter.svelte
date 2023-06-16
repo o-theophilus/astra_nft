@@ -4,7 +4,7 @@
 
 	let emit = createEventDispatcher();
 
-	let keys = Object.keys($filter)
+	let keys = Object.keys($filter);
 	let values = [];
 	let fk;
 	let fv;
@@ -36,7 +36,6 @@
 </script>
 
 <section>
-	Trait:
 	<select
 		bind:value={fk}
 		on:change={() => {
@@ -51,8 +50,6 @@
 			</option>
 		{/each}
 	</select>
-
-	Variation:
 	<select bind:value={fv}>
 		<option disabled selected hidden>select variation</option>
 		{#each values as x}
@@ -74,17 +71,19 @@
 			reset();
 		}}
 	>
-		reset
+		x
 	</button>
 </section>
 
 <style>
 	section {
 		display: flex;
-		justify-content: center;
+		justify-content: end;
 		align-items: center;
 		flex-wrap: wrap;
-		gap: var(--gap1);
+		gap: var(--sp1);
+
+		margin: var(--sp2);
 	}
 
 	option {

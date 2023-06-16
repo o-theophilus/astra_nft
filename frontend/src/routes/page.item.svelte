@@ -17,12 +17,12 @@
 
 <style>
 	section {
-		padding: var(--gap2);
+		padding: var(--sp2);
 		border-radius: var(--br1);
 
 		background-color: var(--ac4);
 		cursor: pointer;
-		transition: var(--trans1);
+		transition: transform 0.2s ease-in-out;;
 	}
 
 	section:hover {
@@ -32,5 +32,8 @@
 	img {
 		border-radius: var(--br1);
 		width: 100%;
+		aspect-ratio: 1/1;
+		background-image: url('./image/loading.png');
+		background-size: cover;
 	}
 </style>

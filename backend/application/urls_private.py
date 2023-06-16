@@ -3,9 +3,8 @@ from os import getcwd, path, mkdir
 import json
 from random import shuffle
 import time
-from .tools import (is_good, has_duplicate1, has_duplicate2,
-                    assign_rarity, assign_id, save, get_meta,
-                    generate_photo)
+from .tools import (is_good, has_duplicate, assign_rarity,
+                    assign_id, save, get_meta, generate_photo)
 
 bp = Blueprint("urls_private", __name__)
 
@@ -25,8 +24,9 @@ def generate_meta():
 
     meta = [*male, *female]
 
-    print("has_duplicate?", has_duplicate1(meta))
-    print("has_duplicate?", has_duplicate2(meta))
+    if has_duplicate(meta):
+        print("has duplicate")
+        generate_meta()
 
     shuffle(meta)
     assign_rarity(meta)
@@ -85,8 +85,9 @@ def cleanup():
         gen["id"] = x["id"]
         meta.append(gen)
 
-    print("has_duplicate?", has_duplicate1(bare_meta))
-    print("has_duplicate?", has_duplicate2(bare_meta))
+    if has_duplicate(bare_meta):
+        print("has duplicate")
+        cleanup()
 
     meta = sorted(meta, key=lambda d: d["id"], reverse=False)
     assign_rarity(meta)

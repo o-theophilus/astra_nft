@@ -1,25 +1,20 @@
 :root {
-	--midtone: gray;
+	--sp1: 8px;
+	--sp2: 16px;
+	--sp3: 24px;
+	
+	--br1: 4px;
+
+
+	--shad1: 0 0 8px rgba(0, 0, 0, 0.282);
+	
+	--headerHeight: 80px;
+
 	--overlay: rgba(0, 0, 0, 0.8);
 	
-	--color1: #1d9bf0;
-	--color2: #146ca8;
-	--color3: #4d0083;
-	--color4: red;
-	--color5: #04AA6D;
-	--color6: goldenrod;
-
-	--gap1: 8px;
-	--gap2: 16px;
-	--gap3: 24px;
-
-	--br1: 4px;
-	--shad1: 0 0 8px rgba(0, 0, 0, 0.282);
-
-	--trans1: all 0.2s ease-in-out;
-
-	--headerHeight: 60px;
-
+	--cl0: #4d0083;
+	--cl1: #4F7AA6;
+	--cl4: red;
 
 	--ac1_: black;
 	--ac2_: rgb(63, 63, 63);
