@@ -33,7 +33,7 @@
 		border-radius: var(--br1);
 		width: 100%;
 		aspect-ratio: 1/1;
-		background-image: url('./image/loading.png');
+		background-image: url('/image/loading.png');
 		background-size: cover;
 	}
 </style>

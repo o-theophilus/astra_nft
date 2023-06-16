@@ -66,9 +66,9 @@
 		display: grid;
 
 		grid-template-columns: 1fr;
-		gap: var(--sp2);
+		gap: var(--sp1);
 	}
-
+	
 	@media screen and (min-width: 400px) {
 		.page {
 			grid-template-columns: repeat(2, 1fr);
