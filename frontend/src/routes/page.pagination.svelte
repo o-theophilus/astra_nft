@@ -1,5 +1,5 @@
 <script>
-	import { createEventDispatcher } from 'svelte';
+	import { createEventDispatcher, onMount } from 'svelte';
 	import { page_no, page_no_temp, total_page } from '$lib/store.js';
 
 	let emit = createEventDispatcher();
@@ -17,10 +17,12 @@
 		emit('ok');
 	};
 
+	onMount(() => {
+		$page_no_temp = $page_no;
+	});
+
 	let width1;
 	let width2;
-
-	let test;
 </script>
 
 <section>
