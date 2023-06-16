@@ -219,5 +219,21 @@ weights = {
         "astra_background_5": 17,
         "astra_background_6": 5,
         "astra_background_7": 17,
+        "astra_background_8": 17,
+        "astra_background_9": 17,
+        "astra_background_10": 17,
+    },
+
+    "frame": {
+        "astra_frame_1": 10,
+        "astra_frame_2": 17,
+        "astra_frame_3": 17,
+        "astra_frame_4": 17,
+        "astra_frame_5": 17,
+        "astra_frame_6": 5,
+        "astra_frame_7": 17,
+        "astra_frame_8": 17,
+        "astra_frame_9": 17,
+        "astra_frame_10": 17,
     }
 }

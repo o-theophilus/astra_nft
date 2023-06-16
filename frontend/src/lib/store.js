@@ -1,9 +1,12 @@
 import { writable } from 'svelte/store';
 
-export const backend = import.meta.env.VITE_BACKEND;
 export const module = writable();
 
-export const count = writable({});
-export const params_page = writable(1);
-export const pagination_temp = writable(1);
-export const params_filter = writable("");
+export const filter = writable({});
+export const total_page = writable(0);
+export const nft_count = writable({});
+
+export const page_no = writable(1);
+export const page_no_temp = writable(1);
+export const fk1 = writable("");
+export const fv1 = writable("");

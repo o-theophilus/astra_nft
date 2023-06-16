@@ -1,9 +1,9 @@
 <script>
-	import { count } from '$lib/store.js';
+	import { nft_count } from '$lib/store.js';
 </script>
 
 <nav>
-	<b> Astra NFT - {$count.male + $count.female}</b>
+	<b> Astra NFT - {$nft_count.male + $nft_count.female}</b>
 </nav>
 
 <style>
@@ -18,7 +18,7 @@
 
 		padding: 0 var(--gap2);
 		background-color: var(--color3);
-		color: var(--light_color);
+		color: var(--ac5_);
 		height: var(--headerHeight);
 	}
 	b {

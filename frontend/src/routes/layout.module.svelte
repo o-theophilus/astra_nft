@@ -2,37 +2,34 @@
 	import { scale } from 'svelte/transition';
 	import { backInOut } from 'svelte/easing';
 
-	import { module, backend, count } from '$lib/store.js';
-	import Button from './button.svelte';
+	import { module, nft_count } from '$lib/store.js';
 </script>
 
 {#if $module}
 	<section
+		on:keypress
 		on:click|self={() => {
 			$module = '';
 		}}
 	>
 		<div class="block" transition:scale|local={{ delay: 0, duration: 200, easing: backInOut }}>
-			<div
-				class="close"
+			<button
+				on:keypress
 				on:click={() => {
 					$module = '';
 				}}
 			>
-				<Button
-					icon="close"
-					icon_size="12"
-					class="hover_red"
-					on:click={() => {
-						$module = '';
-					}}
-				/>
-			</div>
+				<svg width="12px" height="12px" viewBox="0 0 1302.74 1302.43">
+					<path
+						d="M842.25 651.32l420.86 -420.65c52.84,-52.84 52.84,-138.1 0,-190.93 -52.84,-52.84 -138.1,-52.84 -190.93,0l-420.86 420.65 -420.75 -420.75c-52.84,-52.84 -138.1,-52.84 -190.93,0 -52.84,52.84 -52.84,138.1 0,190.93l420.86 420.65 -420.86 420.65c-52.84,52.84 -52.84,138.1 0,190.93 52.94,52.84 138.51,52.84 190.93,0l420.86 -420.65 420.86 420.65c52.84,52.84 138.1,52.84 190.93,0 52.43,-52.84 52.43,-138.1 -0.51,-191.04l-420.45 -420.45z"
+					/>
+				</svg>
+			</button>
 			<div class="content">
-				<img src="{backend}/photo/{$module.id}" alt={$module.id} />
+				<img src="{import.meta.env.VITE_BACKEND}/photo/{$module.id}" alt={$module.id} />
 				<div class="details">
 					<span>Astra: <b>#{$module.id}</b></span>
-					<span>rarity rank: <b>{$module.rarity} / {$count.male + $count.female}</b></span>
+					<span>rarity rank: <b>{$module.rarity} / {$nft_count.male + $nft_count.female}</b></span>
 					<br />
 
 					<b>Traits</b>
@@ -43,6 +40,7 @@
 					<span>headgear: <b>{$module.headgear}</b></span>
 					<span>hairstyle: <b>{$module.hairstyle}</b></span>
 					<span>back accessory: <b>{$module.back_accessory}</b></span>
+					<span>frame: <b>{$module.frame}</b></span>
 					<span>background: <b>{$module.background}</b></span>
 				</div>
 			</div>
@@ -51,6 +49,31 @@
 {/if}
 
 <style>
+	button {
+		--size: 40px;
+
+		position: absolute;
+		top: -10px;
+		right: -10px;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		border: none;
+		border-radius: 50%;
+		width: var(--size);
+		height: var(--size);
+
+		background-color: var(--ac3);
+		cursor: pointer;
+	}
+
+	button:hover {
+		fill: var(--ac5_);
+		background-color: var(--color4);
+	}
+
 	section {
 		display: grid;
 		align-items: center;
@@ -71,12 +94,6 @@
 		position: relative;
 	}
 
-	.close {
-		position: absolute;
-		top: -10px;
-		right: -10px;
-	}
-
 	.content,
 	.details {
 		flex-direction: column;
@@ -88,17 +105,17 @@
 
 		width: 100%;
 		padding: var(--gap2);
-		border-radius: var(--brad1);
+		border-radius: var(--br1);
 		overflow: hidden;
 
-		background-color: var(--foreground);
+		background-color: var(--ac4);
 		box-shadow: var(--shad1);
 
 		transition: var(--trans1);
 	}
 
 	img {
-		border-radius: var(--brad1);
+		border-radius: var(--br1);
 		max-width: 500px;
 		width: 100%;
 	}

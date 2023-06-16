@@ -80,6 +80,10 @@ def get_meta(gender, a_list):
         [k for k in weights["background"]],
         [weights["background"][k] for k in weights["background"]]
     )[0]
+    gen["frame"] = choices(
+        [k for k in weights["frame"]],
+        [weights["frame"][k] for k in weights["frame"]]
+    )[0]
     gen["gender"] = gender
 
     if gen in a_list or not is_good(gen):
@@ -213,11 +217,11 @@ def is_good(x):
 def generate_photo(meta):
     """Build photo from meta"""
 
-    def get_v(v, bg=False):
+    def get_v(v, root=False):
         if meta[v] != "none":
             asset_path = f"{getcwd()}/assets/{meta['gender']}/{v}"
-            if bg:
-                asset_path = f"{getcwd()}/assets/background"
+            if root:
+                asset_path = f"{getcwd()}/assets/{v}"
 
             for img_name in listdir(asset_path):
                 if img_name.split(".")[0] == meta[v]:
@@ -261,5 +265,6 @@ def generate_photo(meta):
     photo = Image.alpha_composite(get_v("back_accessory"), photo)
     photo = Image.alpha_composite(
         get_v("background", True).convert(mode="RGBA"), photo)
+    photo = Image.alpha_composite(photo, get_v("frame", True))
 
     return photo

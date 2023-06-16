@@ -19,34 +19,35 @@ def get_all():
     male = 0
     female = 0
     filter = {}
-    for x in data:
-        if x["gender"] == "male":
+    for nft in data:
+        if nft["gender"] == "male":
             male += 1
         else:
             female += 1
 
-        for y in x:
-            if y in ["rarity", "id"]:
+        for ppt in nft:
+            if ppt in ["rarity", "id"]:
                 continue
-            elif y not in filter:
-                filter[y] = []
+            elif ppt not in filter:
+                filter[ppt] = []
 
-            if x[y] not in filter[y]:
-                filter[y].append(x[y])
+            if nft[ppt] not in filter[ppt]:
+                filter[ppt].append(nft[ppt])
 
     page_no = 1
-    if "page" in request.args:
-        page_no = int(request.args["page"])
+    if "page_no" in request.args:
+        page_no = int(request.args["page_no"])
+    fk1 = None
+    if "fk1" in request.args:
+        fk1 = request.args["fk1"]
+    fv1 = None
+    if "fv1" in request.args:
+        fv1 = request.args["fv1"]
 
-    fk = None
-    fv = None
-    if "filter" in request.args:
-        fk, fv = request.args["filter"].split("700")
+    if fk1 and fv1:
+        data = [x for x in data if x[fk1].lower() == fv1.lower()]
 
-    if fk and fv:
-        data = [x for x in data if x[fk].lower() == fv.lower()]
-
-    page_size = 100
+    page_size = 10
     total_page = ceil(len(data) / page_size)
 
     start = (page_no - 1) * page_size
@@ -58,7 +59,7 @@ def get_all():
         "metas": data,
         "total_page": total_page,
         "filter": filter,
-        "count": {
+        "nft_count": {
             "male": male,
             "female": female
         }
