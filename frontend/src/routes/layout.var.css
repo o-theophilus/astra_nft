@@ -27,8 +27,8 @@ main {
 	--ac1: var(--ac1_);
 	--ac2: var(--ac2_);
 	--ac3: var(--ac3_);
-	--ac4: var(--ac4_);
-	--ac5: var(--ac5_);
+	--ac4: var(--ac5_);
+	--ac5: var(--ac4_);
 }
 main.dark {
 	--ac1: white;
