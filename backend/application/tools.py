@@ -250,6 +250,6 @@ def generate_photo(meta):
     photo = Image.alpha_composite(get_v("back_accessory"), photo)
     photo = Image.alpha_composite(
         get_v("background", True).convert(mode="RGBA"), photo)
-    photo = Image.alpha_composite(photo, get_v("frame", True))
+    # photo = Image.alpha_composite(photo, get_v("frame", True))
 
     return photo
