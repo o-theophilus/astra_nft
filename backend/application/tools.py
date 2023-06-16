@@ -63,10 +63,10 @@ def get_meta(gender, a_list):
 
     for x in ["skin_tone", "hairstyle", "attire", "accessory", "headgear",
               "back_accessory", "background", "frame"]:
+
+        trait = weights[gender][x]
         if x in ["background", "frame"]:
             trait = weights[x]
-        else:
-            trait = weights[gender][x]
 
         gen[x] = choices([k for k in trait], [trait[k] for k in trait])[0]
     gen["gender"] = gender
@@ -203,6 +203,7 @@ def generate_photo(meta):
     """Build photo from meta"""
 
     def get_v(v, root=False):
+        photo = Image.new('RGBA', (2000, 2000), (0, 0, 0, 0))
         if meta[v] != "none":
             asset_path = f"{getcwd()}/assets/{meta['gender']}/{v}"
             if root:
@@ -211,8 +212,7 @@ def generate_photo(meta):
             for img_name in listdir(asset_path):
                 if img_name.split(".")[0] == meta[v]:
                     photo = Image.open(f"{asset_path}/{img_name}")
-        else:
-            photo = Image.new('RGBA', (2000, 2000), (0, 0, 0, 0))
+
         return photo
 
     photo = Image.alpha_composite(get_v("skin_tone"), get_v("hairstyle"))
