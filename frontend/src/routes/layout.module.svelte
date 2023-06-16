@@ -29,15 +29,15 @@
 			<br />
 
 			<b>Traits</b>
-			<span>gender: <b>{$module.gender}</b></span>
-			<span>skin tone: <b>{$module.skin_tone}</b></span>
-			<span>attire: <b>{$module.attire}</b></span>
-			<span>accessory: <b>{$module.accessory}</b></span>
-			<span>headgear: <b>{$module.headgear}</b></span>
-			<span>hairstyle: <b>{$module.hairstyle}</b></span>
-			<span>back accessory: <b>{$module.back_accessory}</b></span>
-			<span>frame: <b>{$module.frame}</b></span>
-			<span>background: <b>{$module.background}</b></span>
+			<span>gender: <b>{$module.gender.replace(/_/g, " ")}</b></span>
+			<span>skin tone: <b>{$module.skin_tone.replace(/_/g, " ")}</b></span>
+			<span>attire: <b>{$module.attire.replace(/_/g, " ")}</b></span>
+			<span>accessory: <b>{$module.accessory.replace(/_/g, " ")}</b></span>
+			<span>headgear: <b>{$module.headgear.replace(/_/g, " ")}</b></span>
+			<span>hairstyle: <b>{$module.hairstyle.replace(/_/g, " ")}</b></span>
+			<span>back accessory: <b>{$module.back_accessory.replace(/_/g, " ")}</b></span>
+			<span>frame: <b>{$module.frame.replace(/_/g, " ")}</b></span>
+			<span>background: <b>{$module.background.replace(/_/g, " ")}</b></span>
 		</div>
 	</section>
 {/if}
