@@ -4,7 +4,9 @@
 
 <nav>
 	<div class="block">
-		<img src="./image/logo.png" alt="" />
+		<a href="/" data-sveltekit-reload>
+			<img src="./image/logo.png" alt="Astra Logo" />
+		</a>
 		{($nft_count.male + $nft_count.female).toLocaleString()} NFT
 	</div>
 </nav>
