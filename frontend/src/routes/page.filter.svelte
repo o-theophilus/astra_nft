@@ -2,6 +2,8 @@
 	import { createEventDispatcher, onMount } from 'svelte';
 	import { fk1, fv1, filter } from '$lib/store.js';
 
+	import SVG from '$lib/svg.svelte';
+
 	let emit = createEventDispatcher();
 
 	let keys = Object.keys($filter);
@@ -36,28 +38,30 @@
 </script>
 
 <section>
-	<select
-		bind:value={fk}
-		on:change={() => {
-			values = $filter[fk];
-			fv = 'select variation';
-		}}
-	>
-		<option disabled selected hidden>select trait</option>
-		{#each keys as x}
-			<option value={x}>
-				{x}
-			</option>
-		{/each}
-	</select>
-	<select bind:value={fv}>
-		<option disabled selected hidden>select variation</option>
-		{#each values as x}
-			<option value={x}>
-				{x}
-			</option>
-		{/each}
-	</select>
+	<div>
+		<select
+			bind:value={fk}
+			on:change={() => {
+				values = $filter[fk];
+				fv = 'select variation';
+			}}
+		>
+			<option disabled selected hidden>select trait</option>
+			{#each keys as x}
+				<option value={x}>
+					{x}
+				</option>
+			{/each}
+		</select>
+		<select bind:value={fv}>
+			<option disabled selected hidden>select variation</option>
+			{#each values as x}
+				<option value={x}>
+					{x}
+				</option>
+			{/each}
+		</select>
+	</div>
 
 	<button
 		on:click={() => {
@@ -67,11 +71,12 @@
 		filter
 	</button>
 	<button
+		class="clear"
 		on:click={() => {
 			reset();
 		}}
 	>
-		x
+		<SVG type="close" size="8" />
 	</button>
 </section>
 
@@ -83,10 +88,30 @@
 		flex-wrap: wrap;
 		gap: var(--sp1);
 
-		margin: var(--sp2);
+		max-width: var(--headerWidth);
+		margin: var(--sp2) auto;
+		padding: 0 var(--sp2);
 	}
 
 	option {
 		text-transform: capitalize;
+	}
+
+	.clear {
+		--size: 30px;
+
+		display: flex;
+		justify-content: center;
+		align-items: center;
+
+		width: var(--size);
+		height: var(--size);
+		border-radius: 50%;
+
+		fill: var(--ac2);
+	}
+	.clear:hover {
+		fill: var(--ac5_);
+		background-color: var(--cl4);
 	}
 </style>

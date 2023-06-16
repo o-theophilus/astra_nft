@@ -24,8 +24,7 @@
 		gap: var(--sp2);
 		justify-content: space-between;
 
-		width: 100%;
-		max-width: 800px;
+		max-width: var(--headerWidth);
 		height: var(--headerHeight);
 		padding: 0 var(--sp2);
 		margin: auto;

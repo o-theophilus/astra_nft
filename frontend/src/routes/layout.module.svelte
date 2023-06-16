@@ -3,6 +3,7 @@
 	import { backInOut } from 'svelte/easing';
 
 	import { module, nft_count } from '$lib/store.js';
+	import SVG from '$lib/svg.svelte';
 </script>
 
 {#if $module}
@@ -19,11 +20,7 @@
 					$module = '';
 				}}
 			>
-				<svg width="12px" height="12px" viewBox="0 0 1302.74 1302.43">
-					<path
-						d="M842.25 651.32l420.86 -420.65c52.84,-52.84 52.84,-138.1 0,-190.93 -52.84,-52.84 -138.1,-52.84 -190.93,0l-420.86 420.65 -420.75 -420.75c-52.84,-52.84 -138.1,-52.84 -190.93,0 -52.84,52.84 -52.84,138.1 0,190.93l420.86 420.65 -420.86 420.65c-52.84,52.84 -52.84,138.1 0,190.93 52.94,52.84 138.51,52.84 190.93,0l420.86 -420.65 420.86 420.65c52.84,52.84 138.1,52.84 190.93,0 52.43,-52.84 52.43,-138.1 -0.51,-191.04l-420.45 -420.45z"
-					/>
-				</svg>
+				<SVG type="close" size="12" />
 			</button>
 			<img src="{import.meta.env.VITE_BACKEND}/photo/{$module.id}" alt={$module.id} />
 			<br />

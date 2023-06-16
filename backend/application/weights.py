@@ -229,11 +229,11 @@ weights = {
         "astra_frame_2": 5,
         "astra_frame_3": 2,
         "astra_frame_4": 5,
-        "astra_frame_5": 5,
+        "astra_frame_5": 2,
         "astra_frame_6": 5,
         "astra_frame_7": 3,
         "astra_frame_8": 1,
         "astra_frame_9": 3,
-        "astra_frame_10": 4,
+        "astra_frame_10": 2,
     }
 }
