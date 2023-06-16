@@ -97,6 +97,7 @@ def photo(id, thumbnail=False):
         photo = ImageOps.fit(photo, (width, height), Image.ANTIALIAS)
 
     photo_file = BytesIO()
-    photo.save(photo_file, format="PNG")
+    # photo.save(photo_file, format="PNG")
+    photo.save(photo_file, format="PNG", optimize=True, compress_level=9)
     photo_file.seek(0)
     return send_file(photo_file, mimetype="image/png")
