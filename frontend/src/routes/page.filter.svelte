@@ -49,7 +49,7 @@
 			<option disabled selected hidden>select trait</option>
 			{#each keys as x}
 				<option value={x}>
-					{x}
+					{x.replace(/_/g, " ")}
 				</option>
 			{/each}
 		</select>
@@ -57,7 +57,7 @@
 			<option disabled selected hidden>select variation</option>
 			{#each values as x}
 				<option value={x}>
-					{x}
+					{x.replace(/_/g, " ")}
 				</option>
 			{/each}
 		</select>
@@ -93,6 +93,7 @@
 		padding: 0 var(--sp2);
 	}
 
+	select,
 	option {
 		text-transform: capitalize;
 	}
