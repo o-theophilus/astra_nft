@@ -90,6 +90,7 @@ def photo(id, thumbnail=False):
 
     photo = generate_photo(meta)
 
+    photo = ImageOps.fit(photo, (1000, 1000), Image.ANTIALIAS)
     if thumbnail:
         x = 5
         width = int(1000/x)
@@ -97,7 +98,6 @@ def photo(id, thumbnail=False):
         photo = ImageOps.fit(photo, (width, height), Image.ANTIALIAS)
 
     photo_file = BytesIO()
-    # photo.save(photo_file, format="PNG")
-    photo.save(photo_file, format="PNG", optimize=True, compress_level=9)
+    photo.save(photo_file, format="PNG")
     photo_file.seek(0)
     return send_file(photo_file, mimetype="image/png")
