@@ -1,20 +1,34 @@
 <script>
+	import { page } from '$app/stores';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { fk1, fv1, filter } from '$lib/store.js';
 
 	import SVG from '$lib/svg.svelte';
 
 	let emit = createEventDispatcher();
 
-	let keys = Object.keys($filter);
+	export let filter = {};
+	let keys = Object.keys(filter);
 	let values = [];
 	let fk;
 	let fv;
 
+	onMount(() => {
+		if ($page.url.searchParams.has('fk1') && $page.url.searchParams.has('fv1')) {
+			fk = $page.url.searchParams.get('fk1');
+			fv = $page.url.searchParams.get('fv1');
+			values = filter[fk];
+		} else {
+			$page.url.searchParams.delete('fk1');
+			$page.url.searchParams.delete('fv1');
+		}
+	});
+
 	const submit = () => {
 		if (fk && fv && fk != 'select trait' && fv != 'select variation') {
-			$fk1 = fk;
-			$fv1 = fv;
+			$page.url.searchParams.set('fk1', fk);
+			$page.url.searchParams.set('fv1', fv);
+			$page.url.searchParams.delete('page_no');
+			window.history.pushState(history.state, '', $page.url.href);
 			emit('ok');
 		}
 	};
@@ -22,19 +36,13 @@
 	const reset = () => {
 		fk = 'select trait';
 		fv = 'select variation';
-		$fk1 = '';
-		$fv1 = '';
 		values = [];
+		$page.url.searchParams.delete('fk1');
+		$page.url.searchParams.delete('fv1');
+		$page.url.searchParams.delete('page_no');
+		window.history.pushState(history.state, '', $page.url.href);
 		emit('ok');
 	};
-
-	onMount(() => {
-		if ($fk1 && $fv1) {
-			fk = $fk1;
-			fv = $fv1;
-			values = $filter[fk];
-		}
-	});
 </script>
 
 <section>
@@ -42,14 +50,14 @@
 		<select
 			bind:value={fk}
 			on:change={() => {
-				values = $filter[fk];
+				values = filter[fk];
 				fv = 'select variation';
 			}}
 		>
 			<option disabled selected hidden>select trait</option>
 			{#each keys as x}
 				<option value={x}>
-					{x.replace(/_/g, " ")}
+					{x.replace(/_/g, ' ')}
 				</option>
 			{/each}
 		</select>
@@ -57,7 +65,7 @@
 			<option disabled selected hidden>select variation</option>
 			{#each values as x}
 				<option value={x}>
-					{x.replace(/_/g, " ")}
+					{x.replace(/_/g, ' ')}
 				</option>
 			{/each}
 		</select>

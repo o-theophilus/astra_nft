@@ -1,35 +1,49 @@
 <script>
+	import { page } from '$app/stores';
 	import { createEventDispatcher, onMount } from 'svelte';
-	import { page_no, page_no_temp, total_page } from '$lib/store.js';
 
 	let emit = createEventDispatcher();
+	let page_no, page_no_temp, width1, width2;
+	export let total_page = 1;
 
-	const goto_page = async (p) => {
-		if (p < 1) {
-			p = 1;
-		} else if (p > $total_page) {
-			p = $total_page;
+	onMount(() => {
+		reset();
+		let params = $page.url.searchParams;
+		if (params.has('page_no')) {
+			let temp = normalise(params.get('page_no'));
+			page_no = page_no_temp = temp;
+			params.set('page_no', temp);
+			window.history.pushState(history.state, '', $page.url.href);
 		}
+	});
 
-		$page_no_temp = p;
-		$page_no = p;
+	const normalise = (value) => {
+		if (value < 1) {
+			value = 1;
+		} else if (value > total_page) {
+			value = total_page;
+		}
+		return value;
+	};
 
+	const submit = (value) => {
+		let temp = normalise(value);
+		page_no_temp = page_no = temp;
+		$page.url.searchParams.set('page_no', temp);
+		window.history.pushState(history.state, '', $page.url.href);
 		emit('ok');
 	};
 
-	onMount(() => {
-		$page_no_temp = $page_no;
-	});
-
-	let width1;
-	let width2;
+	export const reset = () => {
+		page_no = page_no_temp = 1;
+	};
 </script>
 
 <section>
-	{#if $page_no > 1}
+	{#if page_no > 1}
 		<button
 			on:click={() => {
-				goto_page($page_no - 1);
+				submit(page_no - 1);
 			}}
 		>
 			❮ prev
@@ -37,41 +51,40 @@
 	{/if}
 
 	<div class="input">
-		<!-- size="0" -->
 		<input
 			style:width="calc({width1}px + {width2}px)"
 			type="number"
-			bind:value={$page_no_temp}
+			bind:value={page_no_temp}
 			on:keypress={(e) => {
 				if (e.key == 'Enter') {
-					goto_page($page_no_temp);
+					submit(page_no_temp);
 				}
 			}}
 		/>
 		<span class="helper" bind:clientWidth={width1}>
-			{#if $page_no_temp}
-				{$page_no_temp}
+			{#if page_no_temp}
+				{page_no_temp}
 			{/if}
 		</span>
 		<div class="total" bind:clientWidth={width2}>
-			/ {$total_page}
+			/ {total_page}
 		</div>
 	</div>
 
-	{#if $page_no_temp != $page_no}
+	{#if page_no_temp != page_no}
 		<button
 			on:click={() => {
-				goto_page($page_no_temp);
+				submit(page_no_temp);
 			}}
 		>
 			go ❯❯
 		</button>
 	{/if}
 
-	{#if $page_no < $total_page}
+	{#if page_no < total_page}
 		<button
 			on:click={() => {
-				goto_page(parseInt($page_no) + 1);
+				submit(parseInt(page_no) + 1);
 			}}
 		>
 			next ❯
@@ -85,7 +98,7 @@
 		justify-content: center;
 		gap: var(--sp1);
 
-		padding: var(--sp2);
+		margin: var(--sp2);
 	}
 
 	.input {

@@ -1,5 +1,5 @@
 <script>
-	import { page_no, page_no_temp, fk1, fv1, total_page } from '$lib/store.js';
+	import { page } from '$app/stores';
 
 	import Item from './page.item.svelte';
 	import Pagination from './page.pagination.svelte';
@@ -7,27 +7,12 @@
 
 	export let data;
 	let { metas } = data;
+	let { total_page } = data;
+	let { filter } = data;
+	let pagination;
 
-	const submit = async (is_filter = false) => {
-		let backend = new URL(`${import.meta.env.VITE_BACKEND}/nft`);
-
-		if ($page_no && !is_filter) {
-			backend.searchParams.append('page_no', $page_no);
-		}
-		if ($fk1 && $fv1) {
-			backend.searchParams.append('fk1', $fk1);
-			backend.searchParams.append('fv1', $fv1);
-		}
-
-		// window.history.pushState(history.state, '', `${window.location.pathname}${backend.search}`);
-		window.history.replaceState(history.state, '', `${window.location.pathname}${backend.search}`);
-
-		if (is_filter) {
-			$page_no = 1;
-			$page_no_temp = 1;
-		}
-
-		let resp = await fetch(backend, {
+	const submit = async () => {
+		let resp = await fetch(`${import.meta.env.VITE_BACKEND}/nft${$page.url.search}`, {
 			method: 'get',
 			headers: {
 				'Content-Type': 'application/json'
@@ -36,15 +21,17 @@
 
 		resp = await resp.json();
 		metas = resp.metas;
-		$total_page = resp.total_page;
+		total_page = resp.total_page;
 
 		window.scrollTo({ top: 0, behavior: 'smooth' });
 	};
 </script>
 
 <Filter
+	{filter}
 	on:ok={() => {
-		submit('filter');
+		pagination.reset();
+		submit();
 	}}
 />
 
@@ -55,6 +42,8 @@
 </div>
 
 <Pagination
+	{total_page}
+	bind:this={pagination}
 	on:ok={() => {
 		submit();
 	}}
@@ -68,7 +57,7 @@
 		grid-template-columns: 1fr;
 		gap: var(--sp1);
 	}
-	
+
 	@media screen and (min-width: 400px) {
 		.page {
 			grid-template-columns: repeat(2, 1fr);
