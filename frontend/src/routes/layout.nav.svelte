@@ -31,4 +31,7 @@
 		padding: 0 var(--sp2);
 		margin: auto;
 	}
+	img {
+		height: 30px;
+	}
 </style>
