@@ -66,6 +66,8 @@ select {
 		
 	color: var(--ac2);
 	background-color: var(--ac4);
+
+	cursor: pointer;
 }
 
 
