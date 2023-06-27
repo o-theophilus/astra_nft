@@ -90,7 +90,7 @@ def photo(id, thumbnail=False):
 
     photo = generate_photo(meta)
 
-    scale = 2000
+    scale = 1000
     if thumbnail:
         scale = 200
 
