@@ -11,7 +11,7 @@ bp = Blueprint("urls_private", __name__)
 
 @bp.get("/generate_meta")
 def generate_meta():
-    amount_to_generate = 10000
+    amount_to_generate = 10950
 
     tic = time.perf_counter()
 

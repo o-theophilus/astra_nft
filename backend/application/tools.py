@@ -64,9 +64,10 @@ def get_meta(gender, a_list):
     for x in ["skin_tone", "hairstyle", "attire", "accessory", "headgear",
               "back_accessory", "background", "frame"]:
 
-        trait = weights[gender][x]
         if x in ["background", "frame"]:
             trait = weights[x]
+        else:
+            trait = weights[gender][x]
 
         gen[x] = choices([k for k in trait], [trait[k] for k in trait])[0]
     gen["gender"] = gender
@@ -80,119 +81,124 @@ def get_meta(gender, a_list):
 def is_good(x):
     if x["gender"] == "female":
         if (
-            x["headgear"] == "AstraCap"
-            and x["hairstyle"] in ["astra hairstyle 4", "astra hairstyle 11",
-                                   "astra hairstyle 5", "astra hairstyle 1",
-                                   "astra hairstyle 7",
-                                   "astra hairstyle 10", "astra hairstyle 18",
-                                   "astra hairstyle 16", "astra hairstyle 3",
-                                   "astra hairstyle 13", "astra hairstyle 15"]
+            x["headgear"] == "astra_cap"
+            and x["hairstyle"] in ["female_hairstyle_4", "female_hairstyle_11",
+                                   "female_hairstyle_5", "female_hairstyle_1",
+                                   "female_hairstyle_7",
+                                   "female_hairstyle_10",
+                                   "female_hairstyle_18",
+                                   "female_hairstyle_16", "female_hairstyle_3",
+                                   "female_hairstyle_13",
+                                   "female_hairstyle_15"]
         ):
             return False
         elif x["attire"] == "none":
             return False
         elif (
-            x["headgear"] in ["astra helmet spike",
-                              "Astrahelmet", "blackasmask"]
-            and x["hairstyle"] in ["astra hairstyle 1", "astra hairstyle 3",
-                                   "astra hairstyle 4", "astra hairstyle 5",
-                                   "astra hairstyle 7", "astra hairstyle 12",
-                                   "astra hairstyle 13", "astra hairstyle 15",
-                                   "astra hairstyle 16", "astra hairstyle 18"]
+            x["headgear"] in ["astra_helmet_spike",
+                              "astrahelmet", "blackasmask"]
+            and x["hairstyle"] in ["female_hairstyle_1", "female_hairstyle_3",
+                                   "female_hairstyle_4", "female_hairstyle_5",
+                                   "female_hairstyle_7", "female_hairstyle_12",
+                                   "female_hairstyle_13",
+                                   "female_hairstyle_15",
+                                   "female_hairstyle_16",
+                                   "female_hairstyle_18"]
         ):
             return False
         elif (
-            x["headgear"] in ["astra helmet spike",
-                              "Astrahelmet", "blackasmask"]
-            and x["accessory"] == "white pearrl neclace"
+            x["headgear"] in ["astra_helmet_spike",
+                              "astrahelmet", "blackasmask"]
+            and x["accessory"] == "white_pearrl_neclace"
         ):
             return False
         elif (
-            x["attire"] == "astra attire 21"
-            and x["accessory"] == "white pearrl neclace"
-            and x['headgear'] in ["gob mask", "mask"]
+            x["attire"] == "female_attire_21"
+            and x["accessory"] == "white_pearrl_neclace"
+            and x['headgear'] in ["gob_mask", "mask"]
         ):
             return False
         elif (
-            x["attire"] == "astra attire 23"
-            and x['hairstyle'] not in ["astra hairstyle 2",
-                                       "astra hairstyle 8", "none"]
+            x["attire"] == "female_attire_23"
+            and x['hairstyle'] not in ["female_hairstyle_2",
+                                       "female_hairstyle_8", "none"]
         ):
             return False
         elif (
-            x["attire"] == "astra attire 7"
-            and x['hairstyle'] in ["astra hairstyle 5", "astra hairstyle 13"]
+            x["attire"] == "female_attire_7"
+            and x['hairstyle'] in ["female_hairstyle_5", "female_hairstyle_13"]
         ):
             return False
         elif (
-            x["attire"] == "astra attire 23"
-            and x['accessory'] == "white pearrl neclace"
+            x["attire"] == "female_attire_23"
+            and x['accessory'] == "white_pearrl_neclace"
         ):
             return False
         elif (
-            x["headgear"] in ["astra helmet spike",
-                              "AstraCap", "Astrahelmet", "blackasmask"]
-            and x['attire'] in ["astra attire 24", "astra attire 21",
-                                "astra attire 35"]
+            x["headgear"] in ["astra_helmet_spike",
+                              "astra_cap", "astrahelmet", "blackasmask"]
+            and x['attire'] in ["female_attire_24", "female_attire_21",
+                                "female_attire_35"]
         ):
             return False
         elif (
-            x["attire"] == "astra attire 35"
+            x["attire"] == "female_attire_35"
             and (
-                x["accessory"] == "white pearrl neclace"
-                or x["headgear"] == "astra helmet spike"
-                or x["hairstyle"] in ["astra hairstyle 5",
-                                      "astra hairstyle 15",
-                                      "astra hairstyle 13"]
+                x["accessory"] == "white_pearrl_neclace"
+                or x["headgear"] == "astra_helmet_spike"
+                or x["hairstyle"] in ["female_hairstyle_5",
+                                      "female_hairstyle_15",
+                                      "female_hairstyle_13"]
             )
         ):
             return False
     else:
         if (
-            x["headgear"] in ["blackasspke red", "helmetenticls",
-                              "mech had", "punkhelmet", "AstraCap",
-                              "IMG-4101", "IMG-4102",
-                              "IMG-4103", "IMG-4104",
+            x["headgear"] in ["blackasspke_red", "helmetenticls",
+                              "mech_had", "punkhelmet", "astra_cap",
+                              "male_headgear_5", "male_headgear_6",
+                              "male_headgear_7", "male_headgear_8",
                               ]
-            and x["hairstyle"] in ["astra hairstyle 4", "astra hairstyle 5",
-                                   "astra hairstyle 7", "astra hairstyle 8",
-                                   "astra hairstyle 9", "astra hairstyle 13"]
+            and x["hairstyle"] in ["male_hairstyle_4", "male_hairstyle_5",
+                                   "male_hairstyle_7", "male_hairstyle_8",
+                                   "male_hairstyle_9", "male_hairstyle_13"]
         ):
             return False
         elif (
-            x["headgear"] == "AstraCap"
+            x["headgear"] == "astra_cap"
             and x["hairstyle"] in [
-                "astra hairstyle 1", "astra hairstyle 2",
-                "astra hairstyle 3", "astra hairstyle 4",
-                "astra hairstyle 6", "astra hairstyle 15",
+                "male_hairstyle_1", "male_hairstyle_2",
+                "male_hairstyle_3", "male_hairstyle_4",
+                "male_hairstyle_6", "male_hairstyle_15",
             ]
         ):
             return False
         elif (
-            x["attire"] in ["astra attire 11", "astra attire 24",
-                            "astra attire 25", "astra attire 32",
-                            "astra attire 33", "astra attire 34"]
+            x["attire"] in ["male_attire_11", "male_attire_24",
+                            "male_attire_25", "male_attire_32",
+                            "male_attire_33", "male_attire_34"]
             and (
-                x["headgear"] in ["AstraCap", "mech had", "whyeemaskt",
-                                  "blackasspke red", "helmetenticls",
+                x["headgear"] in ["astra_cap", "mech_had", "whyeemaskt",
+                                  "blackasspke_red", "helmetenticls",
                                   "punkhelmet",
-                                  "IMG-4101", "IMG-4102",
-                                  "IMG-4103", "IMG-4104",
+                                  "male_headgear_5", "male_headgear_6",
+                                  "male_headgear_7", "male_headgear_8",
                                   ]
-                or x["hairstyle"] in ["astra hairstyle 3", "astra hairstyle 4",
-                                      "astra hairstyle 5", "astra hairstyle 7",
-                                      "astra hairstyle 8", "astra hairstyle 9",
-                                      "astra hairstyle 13",
-                                      "astra hairstyle 15"]
-                or x["accessory"] in ["astra accessory 2", "astra accessory 3",
-                                      "astra accessory 4"]
+                or x["hairstyle"] in ["male_hairstyle_3", "male_hairstyle_4",
+                                      "male_hairstyle_5", "male_hairstyle_7",
+                                      "male_hairstyle_8", "male_hairstyle_9",
+                                      "male_hairstyle_13",
+                                      "male_hairstyle_15"]
+                or x["accessory"] in ["astra_gold", "astra_silver",
+                                      "astra_bronze"]
             )
         ):
             return False
         elif (
-            x["attire"] == "astra attire 34"
-            and x["headgear"] in ["IMG-2971", "IMG-3376", "IMG-3385",
-                                  "IMG-3397", "IMG-4122", "obsidian shades"]
+            x["attire"] == "male_attire_34"
+            and x["headgear"] in ["male_headgear_1", "male_headgear_2",
+                                  "male_headgear_3", "male_headgear_4",
+                                  "male_headgear_9", "obsidian_shades"]
         ):
             return False
 
@@ -219,26 +225,26 @@ def generate_photo(meta):
     if (
         meta['gender'] == "female"
         and meta['attire'] in [
-            "astra attire 24", "astra attire 21", "astra attire 35"]
+            "female_attire_24", "female_attire_21", "female_attire_35"]
         or meta['gender'] == "male"
-        and meta['attire'] in ["astra attire 24", "astra attire 25"]
-        and meta['headgear'] not in ["focus mask", "memask"]
+        and meta['attire'] in ["male_attire_24", "male_attire_25"]
+        and meta['headgear'] not in ["focus_mask", "memask"]
     ):
         photo = Image.alpha_composite(photo, get_v("headgear"))
         photo = Image.alpha_composite(photo, get_v("attire"))
         photo = Image.alpha_composite(photo, get_v("accessory"))
     elif (
         meta['gender'] == "male"
-        and meta['headgear'] in ["blackasspke red", "focus mask",
+        and meta['headgear'] in ["blackasspke_red", "focus_mask",
                                  "helmetenticls", "memask",
                                  "punkhelmet", "whyeemaskt"
-                                 "IMG-4101", "IMG-4102",
-                                 "IMG-4103", "IMG-4104"]
-        and meta['accessory'] in ["astra accessory 2", "astra accessory 3",
-                                  "astra accessory 4"]
+                                 "male_headgear_5", "male_headgear_6",
+                                 "male_headgear_7", "male_headgear_8"]
+        and meta['accessory'] in ["astra_gold", "astra_silver",
+                                  "astra_bronze"]
         or meta['gender'] == "female"
-        and meta['headgear'] in ["gob mask", "mask"]
-        and meta['accessory'] == "white pearrl neclace"
+        and meta['headgear'] in ["gob_mask", "mask"]
+        and meta['accessory'] == "white_pearrl_neclace"
     ):
         photo = Image.alpha_composite(photo, get_v("attire"))
         photo = Image.alpha_composite(photo, get_v("accessory"))

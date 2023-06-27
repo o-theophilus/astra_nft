@@ -90,9 +90,9 @@ def photo(id, thumbnail=False):
 
     photo = generate_photo(meta)
 
-    scale = 1000
+    scale = 2000
     if thumbnail:
-        scale = int(scale / 5)
+        scale = 200
 
     photo = ImageOps.fit(photo, (scale, scale), Image.ANTIALIAS)
 

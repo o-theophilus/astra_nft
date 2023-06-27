@@ -25,7 +25,7 @@
 			<img src="{import.meta.env.VITE_BACKEND}/photo/{$module.id}" alt={$module.id} />
 			<br />
 			<span>Astra: <b>#{$module.id}</b></span>
-			<span>rarity rank: <b>{$module.rarity} / {$nft_count.male + $nft_count.female}</b></span>
+			<span>rarity rank: <b>{$module.rarity.toLocaleString()} / {($nft_count.male + $nft_count.female).toLocaleString()}</b></span>
 			<br />
 
 			<b>Traits</b>
