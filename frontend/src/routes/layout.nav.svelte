@@ -7,7 +7,7 @@
 		<a href="/" data-sveltekit-reload>
 			<img src="./image/logo.png" alt="Astra Logo" />
 		</a>
-		{($nft_count.male + $nft_count.female).toLocaleString()} NFT
+		{($nft_count.male + $nft_count.female).toLocaleString()} NFTs
 	</div>
 </nav>
 
