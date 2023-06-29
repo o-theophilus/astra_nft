@@ -224,22 +224,14 @@ weights = {
 
     "frame": {
         "amalfitan_azure": 10,
-        "black_gold": 4,
-        "blue_rose": 10,
         "candy_conifer": 10,
-        "carbon_fiber": 10,
-        "clay": 6,
-        "deep_breath": 10,
-        "fishy_house": 10,
-        "galaxy_express": 10,
-        "glass": 4,
+        "carbon_fiber": 7,
         "gold": 3,
-        "lush_greenery": 10,
-        "modern_black": 10,
+        "interstellar": 10,
+        "koi": 10,
+        "kraken": 6,
         "proton": 10,
-        "seashore_night": 10,
         "silver_polish": 10,
         "system_shock": 10,
-        "vital_groove": 10,
     }
 }
