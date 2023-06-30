@@ -16,18 +16,15 @@ post  {{host}}/cleanup HTTP/1.1
 content-type: application/json
 ###
 
-
 #shuffle
 post  {{host}}/shuffle HTTP/1.1
 content-type: application/json
 ###
 
-
 #build_collection
 get  {{host}}/build_collection HTTP/1.1
 content-type: application/json
 ###
-
 
 
 

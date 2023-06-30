@@ -1,7 +1,7 @@
 from flask import Blueprint, jsonify
 from os import getcwd, path, mkdir
 import json
-from random import shuffle
+from random import shuffle  # , sample
 import time
 from .tools import (is_good, has_duplicate, assign_rarity,
                     assign_id, save, get_meta, generate_photo)
@@ -130,6 +130,7 @@ def save_photo_to_folder():
     if not path.exists(output):
         mkdir(output)
 
+    # for x in sample(data, 100):
     for x in data:
         photo = generate_photo(x)
         photo.save(f"{output}/{x['id']}.png")
