@@ -21,6 +21,6 @@ Special thanks to the Astra NFT project team for inspiring this image generator.
 If you have any questions or need further assistance, feel free to contact the project maintainers:
 
 - Your Name - [theophilus.ogbolu@gmail.com]
-- Project Repository: [https://github.com/yourusername/astra-nft-image-generator]([[https://github.com/yourusername/astra-nft-image-generator](https://github.com/o-theophilus/astra_nft](https://github.com/o-theophilus/astra_nft))
+- Project Repository: https://github.com/o-theophilus/astra_nft
 
 Happy image generation for your Astra NFT project! 🚀
