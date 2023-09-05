@@ -22,5 +22,3 @@ If you have any questions or need further assistance, feel free to contact the p
 
 - Your Name - [theophilus.ogbolu@gmail.com]
 - Project Repository: https://github.com/o-theophilus/astra_nft
-
-Happy image generation for your Astra NFT project! 🚀
