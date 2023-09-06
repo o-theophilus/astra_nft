@@ -1,6 +1,6 @@
 # Astra NFT Image Generator
 
-![Astra NFT Image Generator](https://github.com/yourusername/astra-nft-image-generator/blob/main/demo.png)
+![Astra NFT Image Generator](https://astra-nft-backend.vercel.app/photo/1306/thumbnail)
 
 ## Overview
 
