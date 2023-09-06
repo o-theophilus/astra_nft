@@ -94,7 +94,7 @@ def photo(id, thumbnail=False):
     if thumbnail:
         scale = 200
 
-    photo = ImageOps.fit(photo, (scale, scale), Image.ANTIALIAS)
+    photo = ImageOps.fit(photo, (scale, scale), Image.LANCZOS)
 
     photo_file = BytesIO()
     photo.save(photo_file, format="PNG")
